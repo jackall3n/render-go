@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the Job type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Job{}
+
 // Job struct for Job
 type Job struct {
 	Id *string `json:"id,omitempty"`
@@ -57,7 +60,7 @@ func (o *Job) GetId() string {
 // and a boolean to check if the value has been set.
 func (o *Job) GetIdOk() (*string, bool) {
 	if o == nil || isNil(o.Id) {
-    return nil, false
+		return nil, false
 	}
 	return o.Id, true
 }
@@ -89,7 +92,7 @@ func (o *Job) GetServiceId() string {
 // and a boolean to check if the value has been set.
 func (o *Job) GetServiceIdOk() (*string, bool) {
 	if o == nil || isNil(o.ServiceId) {
-    return nil, false
+		return nil, false
 	}
 	return o.ServiceId, true
 }
@@ -121,7 +124,7 @@ func (o *Job) GetStartCommand() string {
 // and a boolean to check if the value has been set.
 func (o *Job) GetStartCommandOk() (*string, bool) {
 	if o == nil || isNil(o.StartCommand) {
-    return nil, false
+		return nil, false
 	}
 	return o.StartCommand, true
 }
@@ -153,7 +156,7 @@ func (o *Job) GetPlanId() string {
 // and a boolean to check if the value has been set.
 func (o *Job) GetPlanIdOk() (*string, bool) {
 	if o == nil || isNil(o.PlanId) {
-    return nil, false
+		return nil, false
 	}
 	return o.PlanId, true
 }
@@ -185,7 +188,7 @@ func (o *Job) GetStatus() string {
 // and a boolean to check if the value has been set.
 func (o *Job) GetStatusOk() (*string, bool) {
 	if o == nil || isNil(o.Status) {
-    return nil, false
+		return nil, false
 	}
 	return o.Status, true
 }
@@ -217,7 +220,7 @@ func (o *Job) GetCreatedAt() string {
 // and a boolean to check if the value has been set.
 func (o *Job) GetCreatedAtOk() (*string, bool) {
 	if o == nil || isNil(o.CreatedAt) {
-    return nil, false
+		return nil, false
 	}
 	return o.CreatedAt, true
 }
@@ -249,7 +252,7 @@ func (o *Job) GetStartedAt() string {
 // and a boolean to check if the value has been set.
 func (o *Job) GetStartedAtOk() (*string, bool) {
 	if o == nil || isNil(o.StartedAt) {
-    return nil, false
+		return nil, false
 	}
 	return o.StartedAt, true
 }
@@ -281,7 +284,7 @@ func (o *Job) GetFinishedAt() string {
 // and a boolean to check if the value has been set.
 func (o *Job) GetFinishedAtOk() (*string, bool) {
 	if o == nil || isNil(o.FinishedAt) {
-    return nil, false
+		return nil, false
 	}
 	return o.FinishedAt, true
 }
@@ -301,6 +304,14 @@ func (o *Job) SetFinishedAt(v string) {
 }
 
 func (o Job) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o Job) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !isNil(o.Id) {
 		toSerialize["id"] = o.Id
@@ -326,7 +337,7 @@ func (o Job) MarshalJSON() ([]byte, error) {
 	if !isNil(o.FinishedAt) {
 		toSerialize["finishedAt"] = o.FinishedAt
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullableJob struct {

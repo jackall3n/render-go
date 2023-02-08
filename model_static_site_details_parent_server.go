@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the StaticSiteDetailsParentServer type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &StaticSiteDetailsParentServer{}
+
 // StaticSiteDetailsParentServer struct for StaticSiteDetailsParentServer
 type StaticSiteDetailsParentServer struct {
 	Id *string `json:"id,omitempty"`
@@ -51,7 +54,7 @@ func (o *StaticSiteDetailsParentServer) GetId() string {
 // and a boolean to check if the value has been set.
 func (o *StaticSiteDetailsParentServer) GetIdOk() (*string, bool) {
 	if o == nil || isNil(o.Id) {
-    return nil, false
+		return nil, false
 	}
 	return o.Id, true
 }
@@ -83,7 +86,7 @@ func (o *StaticSiteDetailsParentServer) GetName() string {
 // and a boolean to check if the value has been set.
 func (o *StaticSiteDetailsParentServer) GetNameOk() (*string, bool) {
 	if o == nil || isNil(o.Name) {
-    return nil, false
+		return nil, false
 	}
 	return o.Name, true
 }
@@ -103,6 +106,14 @@ func (o *StaticSiteDetailsParentServer) SetName(v string) {
 }
 
 func (o StaticSiteDetailsParentServer) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o StaticSiteDetailsParentServer) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !isNil(o.Id) {
 		toSerialize["id"] = o.Id
@@ -110,7 +121,7 @@ func (o StaticSiteDetailsParentServer) MarshalJSON() ([]byte, error) {
 	if !isNil(o.Name) {
 		toSerialize["name"] = o.Name
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullableStaticSiteDetailsParentServer struct {

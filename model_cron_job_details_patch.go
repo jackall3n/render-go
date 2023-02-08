@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CronJobDetailsPATCH type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CronJobDetailsPATCH{}
+
 // CronJobDetailsPATCH struct for CronJobDetailsPATCH
 type CronJobDetailsPATCH struct {
 	EnvSpecificDetails *WebServiceDetailsPATCHEnvSpecificDetails `json:"envSpecificDetails,omitempty"`
@@ -52,7 +55,7 @@ func (o *CronJobDetailsPATCH) GetEnvSpecificDetails() WebServiceDetailsPATCHEnvS
 // and a boolean to check if the value has been set.
 func (o *CronJobDetailsPATCH) GetEnvSpecificDetailsOk() (*WebServiceDetailsPATCHEnvSpecificDetails, bool) {
 	if o == nil || isNil(o.EnvSpecificDetails) {
-    return nil, false
+		return nil, false
 	}
 	return o.EnvSpecificDetails, true
 }
@@ -84,7 +87,7 @@ func (o *CronJobDetailsPATCH) GetPlan() string {
 // and a boolean to check if the value has been set.
 func (o *CronJobDetailsPATCH) GetPlanOk() (*string, bool) {
 	if o == nil || isNil(o.Plan) {
-    return nil, false
+		return nil, false
 	}
 	return o.Plan, true
 }
@@ -116,7 +119,7 @@ func (o *CronJobDetailsPATCH) GetSchedule() string {
 // and a boolean to check if the value has been set.
 func (o *CronJobDetailsPATCH) GetScheduleOk() (*string, bool) {
 	if o == nil || isNil(o.Schedule) {
-    return nil, false
+		return nil, false
 	}
 	return o.Schedule, true
 }
@@ -136,6 +139,14 @@ func (o *CronJobDetailsPATCH) SetSchedule(v string) {
 }
 
 func (o CronJobDetailsPATCH) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o CronJobDetailsPATCH) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !isNil(o.EnvSpecificDetails) {
 		toSerialize["envSpecificDetails"] = o.EnvSpecificDetails
@@ -146,7 +157,7 @@ func (o CronJobDetailsPATCH) MarshalJSON() ([]byte, error) {
 	if !isNil(o.Schedule) {
 		toSerialize["schedule"] = o.Schedule
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullableCronJobDetailsPATCH struct {

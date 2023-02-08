@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the NativeEnvironmentDetailsPOST type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &NativeEnvironmentDetailsPOST{}
+
 // NativeEnvironmentDetailsPOST struct for NativeEnvironmentDetailsPOST
 type NativeEnvironmentDetailsPOST struct {
 	BuildCommand string `json:"buildCommand"`
@@ -54,7 +57,7 @@ func (o *NativeEnvironmentDetailsPOST) GetBuildCommand() string {
 // and a boolean to check if the value has been set.
 func (o *NativeEnvironmentDetailsPOST) GetBuildCommandOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.BuildCommand, true
 }
@@ -78,7 +81,7 @@ func (o *NativeEnvironmentDetailsPOST) GetStartCommand() string {
 // and a boolean to check if the value has been set.
 func (o *NativeEnvironmentDetailsPOST) GetStartCommandOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.StartCommand, true
 }
@@ -89,14 +92,18 @@ func (o *NativeEnvironmentDetailsPOST) SetStartCommand(v string) {
 }
 
 func (o NativeEnvironmentDetailsPOST) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["buildCommand"] = o.BuildCommand
-	}
-	if true {
-		toSerialize["startCommand"] = o.StartCommand
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o NativeEnvironmentDetailsPOST) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["buildCommand"] = o.BuildCommand
+	toSerialize["startCommand"] = o.StartCommand
+	return toSerialize, nil
 }
 
 type NullableNativeEnvironmentDetailsPOST struct {

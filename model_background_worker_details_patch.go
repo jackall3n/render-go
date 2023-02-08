@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the BackgroundWorkerDetailsPATCH type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &BackgroundWorkerDetailsPATCH{}
+
 // BackgroundWorkerDetailsPATCH struct for BackgroundWorkerDetailsPATCH
 type BackgroundWorkerDetailsPATCH struct {
 	EnvSpecificDetails *WebServiceDetailsPATCHEnvSpecificDetails `json:"envSpecificDetails,omitempty"`
@@ -53,7 +56,7 @@ func (o *BackgroundWorkerDetailsPATCH) GetEnvSpecificDetails() WebServiceDetails
 // and a boolean to check if the value has been set.
 func (o *BackgroundWorkerDetailsPATCH) GetEnvSpecificDetailsOk() (*WebServiceDetailsPATCHEnvSpecificDetails, bool) {
 	if o == nil || isNil(o.EnvSpecificDetails) {
-    return nil, false
+		return nil, false
 	}
 	return o.EnvSpecificDetails, true
 }
@@ -85,7 +88,7 @@ func (o *BackgroundWorkerDetailsPATCH) GetNumInstances() int32 {
 // and a boolean to check if the value has been set.
 func (o *BackgroundWorkerDetailsPATCH) GetNumInstancesOk() (*int32, bool) {
 	if o == nil || isNil(o.NumInstances) {
-    return nil, false
+		return nil, false
 	}
 	return o.NumInstances, true
 }
@@ -117,7 +120,7 @@ func (o *BackgroundWorkerDetailsPATCH) GetPlan() string {
 // and a boolean to check if the value has been set.
 func (o *BackgroundWorkerDetailsPATCH) GetPlanOk() (*string, bool) {
 	if o == nil || isNil(o.Plan) {
-    return nil, false
+		return nil, false
 	}
 	return o.Plan, true
 }
@@ -149,7 +152,7 @@ func (o *BackgroundWorkerDetailsPATCH) GetPullRequestPreviewsEnabled() string {
 // and a boolean to check if the value has been set.
 func (o *BackgroundWorkerDetailsPATCH) GetPullRequestPreviewsEnabledOk() (*string, bool) {
 	if o == nil || isNil(o.PullRequestPreviewsEnabled) {
-    return nil, false
+		return nil, false
 	}
 	return o.PullRequestPreviewsEnabled, true
 }
@@ -169,6 +172,14 @@ func (o *BackgroundWorkerDetailsPATCH) SetPullRequestPreviewsEnabled(v string) {
 }
 
 func (o BackgroundWorkerDetailsPATCH) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o BackgroundWorkerDetailsPATCH) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !isNil(o.EnvSpecificDetails) {
 		toSerialize["envSpecificDetails"] = o.EnvSpecificDetails
@@ -182,7 +193,7 @@ func (o BackgroundWorkerDetailsPATCH) MarshalJSON() ([]byte, error) {
 	if !isNil(o.PullRequestPreviewsEnabled) {
 		toSerialize["pullRequestPreviewsEnabled"] = o.PullRequestPreviewsEnabled
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullableBackgroundWorkerDetailsPATCH struct {

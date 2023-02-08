@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CronJobDetailsPOST type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CronJobDetailsPOST{}
+
 // CronJobDetailsPOST struct for CronJobDetailsPOST
 type CronJobDetailsPOST struct {
 	Env ServiceEnv `json:"env"`
@@ -62,7 +65,7 @@ func (o *CronJobDetailsPOST) GetEnv() ServiceEnv {
 // and a boolean to check if the value has been set.
 func (o *CronJobDetailsPOST) GetEnvOk() (*ServiceEnv, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.Env, true
 }
@@ -85,7 +88,7 @@ func (o *CronJobDetailsPOST) GetEnvSpecificDetails() WebServiceDetailsPOSTEnvSpe
 // and a boolean to check if the value has been set.
 func (o *CronJobDetailsPOST) GetEnvSpecificDetailsOk() (*WebServiceDetailsPOSTEnvSpecificDetails, bool) {
 	if o == nil || isNil(o.EnvSpecificDetails) {
-    return nil, false
+		return nil, false
 	}
 	return o.EnvSpecificDetails, true
 }
@@ -117,7 +120,7 @@ func (o *CronJobDetailsPOST) GetPlan() string {
 // and a boolean to check if the value has been set.
 func (o *CronJobDetailsPOST) GetPlanOk() (*string, bool) {
 	if o == nil || isNil(o.Plan) {
-    return nil, false
+		return nil, false
 	}
 	return o.Plan, true
 }
@@ -149,7 +152,7 @@ func (o *CronJobDetailsPOST) GetRegion() Region {
 // and a boolean to check if the value has been set.
 func (o *CronJobDetailsPOST) GetRegionOk() (*Region, bool) {
 	if o == nil || isNil(o.Region) {
-    return nil, false
+		return nil, false
 	}
 	return o.Region, true
 }
@@ -182,7 +185,7 @@ func (o *CronJobDetailsPOST) GetSchedule() string {
 // and a boolean to check if the value has been set.
 func (o *CronJobDetailsPOST) GetScheduleOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.Schedule, true
 }
@@ -193,10 +196,16 @@ func (o *CronJobDetailsPOST) SetSchedule(v string) {
 }
 
 func (o CronJobDetailsPOST) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["env"] = o.Env
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
+	return json.Marshal(toSerialize)
+}
+
+func (o CronJobDetailsPOST) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["env"] = o.Env
 	if !isNil(o.EnvSpecificDetails) {
 		toSerialize["envSpecificDetails"] = o.EnvSpecificDetails
 	}
@@ -206,10 +215,8 @@ func (o CronJobDetailsPOST) MarshalJSON() ([]byte, error) {
 	if !isNil(o.Region) {
 		toSerialize["region"] = o.Region
 	}
-	if true {
-		toSerialize["schedule"] = o.Schedule
-	}
-	return json.Marshal(toSerialize)
+	toSerialize["schedule"] = o.Schedule
+	return toSerialize, nil
 }
 
 type NullableCronJobDetailsPOST struct {

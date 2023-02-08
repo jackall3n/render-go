@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the EnvVarKeyValue type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &EnvVarKeyValue{}
+
 // EnvVarKeyValue struct for EnvVarKeyValue
 type EnvVarKeyValue struct {
 	Key string `json:"key"`
@@ -54,7 +57,7 @@ func (o *EnvVarKeyValue) GetKey() string {
 // and a boolean to check if the value has been set.
 func (o *EnvVarKeyValue) GetKeyOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.Key, true
 }
@@ -78,7 +81,7 @@ func (o *EnvVarKeyValue) GetValue() string {
 // and a boolean to check if the value has been set.
 func (o *EnvVarKeyValue) GetValueOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.Value, true
 }
@@ -89,14 +92,18 @@ func (o *EnvVarKeyValue) SetValue(v string) {
 }
 
 func (o EnvVarKeyValue) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["key"] = o.Key
-	}
-	if true {
-		toSerialize["value"] = o.Value
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o EnvVarKeyValue) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["key"] = o.Key
+	toSerialize["value"] = o.Value
+	return toSerialize, nil
 }
 
 type NullableEnvVarKeyValue struct {

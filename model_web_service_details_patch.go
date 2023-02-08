@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the WebServiceDetailsPATCH type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &WebServiceDetailsPATCH{}
+
 // WebServiceDetailsPATCH struct for WebServiceDetailsPATCH
 type WebServiceDetailsPATCH struct {
 	EnvSpecificDetails *WebServiceDetailsPATCHEnvSpecificDetails `json:"envSpecificDetails,omitempty"`
@@ -54,7 +57,7 @@ func (o *WebServiceDetailsPATCH) GetEnvSpecificDetails() WebServiceDetailsPATCHE
 // and a boolean to check if the value has been set.
 func (o *WebServiceDetailsPATCH) GetEnvSpecificDetailsOk() (*WebServiceDetailsPATCHEnvSpecificDetails, bool) {
 	if o == nil || isNil(o.EnvSpecificDetails) {
-    return nil, false
+		return nil, false
 	}
 	return o.EnvSpecificDetails, true
 }
@@ -86,7 +89,7 @@ func (o *WebServiceDetailsPATCH) GetHealthCheckPath() string {
 // and a boolean to check if the value has been set.
 func (o *WebServiceDetailsPATCH) GetHealthCheckPathOk() (*string, bool) {
 	if o == nil || isNil(o.HealthCheckPath) {
-    return nil, false
+		return nil, false
 	}
 	return o.HealthCheckPath, true
 }
@@ -118,7 +121,7 @@ func (o *WebServiceDetailsPATCH) GetNumInstances() int32 {
 // and a boolean to check if the value has been set.
 func (o *WebServiceDetailsPATCH) GetNumInstancesOk() (*int32, bool) {
 	if o == nil || isNil(o.NumInstances) {
-    return nil, false
+		return nil, false
 	}
 	return o.NumInstances, true
 }
@@ -150,7 +153,7 @@ func (o *WebServiceDetailsPATCH) GetPlan() string {
 // and a boolean to check if the value has been set.
 func (o *WebServiceDetailsPATCH) GetPlanOk() (*string, bool) {
 	if o == nil || isNil(o.Plan) {
-    return nil, false
+		return nil, false
 	}
 	return o.Plan, true
 }
@@ -182,7 +185,7 @@ func (o *WebServiceDetailsPATCH) GetPullRequestPreviewsEnabled() string {
 // and a boolean to check if the value has been set.
 func (o *WebServiceDetailsPATCH) GetPullRequestPreviewsEnabledOk() (*string, bool) {
 	if o == nil || isNil(o.PullRequestPreviewsEnabled) {
-    return nil, false
+		return nil, false
 	}
 	return o.PullRequestPreviewsEnabled, true
 }
@@ -202,6 +205,14 @@ func (o *WebServiceDetailsPATCH) SetPullRequestPreviewsEnabled(v string) {
 }
 
 func (o WebServiceDetailsPATCH) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o WebServiceDetailsPATCH) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !isNil(o.EnvSpecificDetails) {
 		toSerialize["envSpecificDetails"] = o.EnvSpecificDetails
@@ -218,7 +229,7 @@ func (o WebServiceDetailsPATCH) MarshalJSON() ([]byte, error) {
 	if !isNil(o.PullRequestPreviewsEnabled) {
 		toSerialize["pullRequestPreviewsEnabled"] = o.PullRequestPreviewsEnabled
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullableWebServiceDetailsPATCH struct {

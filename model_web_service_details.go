@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the WebServiceDetails type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &WebServiceDetails{}
+
 // WebServiceDetails struct for WebServiceDetails
 type WebServiceDetails struct {
 	Disk *StaticSiteDetailsParentServer `json:"disk,omitempty"`
@@ -60,7 +63,7 @@ func (o *WebServiceDetails) GetDisk() StaticSiteDetailsParentServer {
 // and a boolean to check if the value has been set.
 func (o *WebServiceDetails) GetDiskOk() (*StaticSiteDetailsParentServer, bool) {
 	if o == nil || isNil(o.Disk) {
-    return nil, false
+		return nil, false
 	}
 	return o.Disk, true
 }
@@ -92,7 +95,7 @@ func (o *WebServiceDetails) GetEnv() ServiceEnv {
 // and a boolean to check if the value has been set.
 func (o *WebServiceDetails) GetEnvOk() (*ServiceEnv, bool) {
 	if o == nil || isNil(o.Env) {
-    return nil, false
+		return nil, false
 	}
 	return o.Env, true
 }
@@ -124,7 +127,7 @@ func (o *WebServiceDetails) GetEnvSpecificDetails() WebServiceDetailsEnvSpecific
 // and a boolean to check if the value has been set.
 func (o *WebServiceDetails) GetEnvSpecificDetailsOk() (*WebServiceDetailsEnvSpecificDetails, bool) {
 	if o == nil || isNil(o.EnvSpecificDetails) {
-    return nil, false
+		return nil, false
 	}
 	return o.EnvSpecificDetails, true
 }
@@ -156,7 +159,7 @@ func (o *WebServiceDetails) GetHealthCheckPath() string {
 // and a boolean to check if the value has been set.
 func (o *WebServiceDetails) GetHealthCheckPathOk() (*string, bool) {
 	if o == nil || isNil(o.HealthCheckPath) {
-    return nil, false
+		return nil, false
 	}
 	return o.HealthCheckPath, true
 }
@@ -188,7 +191,7 @@ func (o *WebServiceDetails) GetNumInstances() int32 {
 // and a boolean to check if the value has been set.
 func (o *WebServiceDetails) GetNumInstancesOk() (*int32, bool) {
 	if o == nil || isNil(o.NumInstances) {
-    return nil, false
+		return nil, false
 	}
 	return o.NumInstances, true
 }
@@ -220,7 +223,7 @@ func (o *WebServiceDetails) GetOpenPorts() []ServerPort {
 // and a boolean to check if the value has been set.
 func (o *WebServiceDetails) GetOpenPortsOk() ([]ServerPort, bool) {
 	if o == nil || isNil(o.OpenPorts) {
-    return nil, false
+		return nil, false
 	}
 	return o.OpenPorts, true
 }
@@ -252,7 +255,7 @@ func (o *WebServiceDetails) GetParentServer() StaticSiteDetailsParentServer {
 // and a boolean to check if the value has been set.
 func (o *WebServiceDetails) GetParentServerOk() (*StaticSiteDetailsParentServer, bool) {
 	if o == nil || isNil(o.ParentServer) {
-    return nil, false
+		return nil, false
 	}
 	return o.ParentServer, true
 }
@@ -284,7 +287,7 @@ func (o *WebServiceDetails) GetPlan() string {
 // and a boolean to check if the value has been set.
 func (o *WebServiceDetails) GetPlanOk() (*string, bool) {
 	if o == nil || isNil(o.Plan) {
-    return nil, false
+		return nil, false
 	}
 	return o.Plan, true
 }
@@ -316,7 +319,7 @@ func (o *WebServiceDetails) GetPullRequestPreviewsEnabled() string {
 // and a boolean to check if the value has been set.
 func (o *WebServiceDetails) GetPullRequestPreviewsEnabledOk() (*string, bool) {
 	if o == nil || isNil(o.PullRequestPreviewsEnabled) {
-    return nil, false
+		return nil, false
 	}
 	return o.PullRequestPreviewsEnabled, true
 }
@@ -348,7 +351,7 @@ func (o *WebServiceDetails) GetRegion() Region {
 // and a boolean to check if the value has been set.
 func (o *WebServiceDetails) GetRegionOk() (*Region, bool) {
 	if o == nil || isNil(o.Region) {
-    return nil, false
+		return nil, false
 	}
 	return o.Region, true
 }
@@ -380,7 +383,7 @@ func (o *WebServiceDetails) GetUrl() string {
 // and a boolean to check if the value has been set.
 func (o *WebServiceDetails) GetUrlOk() (*string, bool) {
 	if o == nil || isNil(o.Url) {
-    return nil, false
+		return nil, false
 	}
 	return o.Url, true
 }
@@ -400,6 +403,14 @@ func (o *WebServiceDetails) SetUrl(v string) {
 }
 
 func (o WebServiceDetails) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o WebServiceDetails) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !isNil(o.Disk) {
 		toSerialize["disk"] = o.Disk
@@ -434,7 +445,7 @@ func (o WebServiceDetails) MarshalJSON() ([]byte, error) {
 	if !isNil(o.Url) {
 		toSerialize["url"] = o.Url
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullableWebServiceDetails struct {

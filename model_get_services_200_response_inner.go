@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the GetServices200ResponseInner type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &GetServices200ResponseInner{}
+
 // GetServices200ResponseInner struct for GetServices200ResponseInner
 type GetServices200ResponseInner struct {
 	Service *Service `json:"service,omitempty"`
@@ -51,7 +54,7 @@ func (o *GetServices200ResponseInner) GetService() Service {
 // and a boolean to check if the value has been set.
 func (o *GetServices200ResponseInner) GetServiceOk() (*Service, bool) {
 	if o == nil || isNil(o.Service) {
-    return nil, false
+		return nil, false
 	}
 	return o.Service, true
 }
@@ -83,7 +86,7 @@ func (o *GetServices200ResponseInner) GetCursor() string {
 // and a boolean to check if the value has been set.
 func (o *GetServices200ResponseInner) GetCursorOk() (*string, bool) {
 	if o == nil || isNil(o.Cursor) {
-    return nil, false
+		return nil, false
 	}
 	return o.Cursor, true
 }
@@ -103,6 +106,14 @@ func (o *GetServices200ResponseInner) SetCursor(v string) {
 }
 
 func (o GetServices200ResponseInner) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o GetServices200ResponseInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !isNil(o.Service) {
 		toSerialize["service"] = o.Service
@@ -110,7 +121,7 @@ func (o GetServices200ResponseInner) MarshalJSON() ([]byte, error) {
 	if !isNil(o.Cursor) {
 		toSerialize["cursor"] = o.Cursor
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullableGetServices200ResponseInner struct {

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the WebServiceDetailsPOST type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &WebServiceDetailsPOST{}
+
 // WebServiceDetailsPOST struct for WebServiceDetailsPOST
 type WebServiceDetailsPOST struct {
 	Disk *WebServiceDetailsPOSTDisk `json:"disk,omitempty"`
@@ -73,7 +76,7 @@ func (o *WebServiceDetailsPOST) GetDisk() WebServiceDetailsPOSTDisk {
 // and a boolean to check if the value has been set.
 func (o *WebServiceDetailsPOST) GetDiskOk() (*WebServiceDetailsPOSTDisk, bool) {
 	if o == nil || isNil(o.Disk) {
-    return nil, false
+		return nil, false
 	}
 	return o.Disk, true
 }
@@ -106,7 +109,7 @@ func (o *WebServiceDetailsPOST) GetEnv() ServiceEnv {
 // and a boolean to check if the value has been set.
 func (o *WebServiceDetailsPOST) GetEnvOk() (*ServiceEnv, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.Env, true
 }
@@ -129,7 +132,7 @@ func (o *WebServiceDetailsPOST) GetEnvSpecificDetails() WebServiceDetailsPOSTEnv
 // and a boolean to check if the value has been set.
 func (o *WebServiceDetailsPOST) GetEnvSpecificDetailsOk() (*WebServiceDetailsPOSTEnvSpecificDetails, bool) {
 	if o == nil || isNil(o.EnvSpecificDetails) {
-    return nil, false
+		return nil, false
 	}
 	return o.EnvSpecificDetails, true
 }
@@ -161,7 +164,7 @@ func (o *WebServiceDetailsPOST) GetHealthCheckPath() string {
 // and a boolean to check if the value has been set.
 func (o *WebServiceDetailsPOST) GetHealthCheckPathOk() (*string, bool) {
 	if o == nil || isNil(o.HealthCheckPath) {
-    return nil, false
+		return nil, false
 	}
 	return o.HealthCheckPath, true
 }
@@ -193,7 +196,7 @@ func (o *WebServiceDetailsPOST) GetNumInstances() int32 {
 // and a boolean to check if the value has been set.
 func (o *WebServiceDetailsPOST) GetNumInstancesOk() (*int32, bool) {
 	if o == nil || isNil(o.NumInstances) {
-    return nil, false
+		return nil, false
 	}
 	return o.NumInstances, true
 }
@@ -225,7 +228,7 @@ func (o *WebServiceDetailsPOST) GetPlan() string {
 // and a boolean to check if the value has been set.
 func (o *WebServiceDetailsPOST) GetPlanOk() (*string, bool) {
 	if o == nil || isNil(o.Plan) {
-    return nil, false
+		return nil, false
 	}
 	return o.Plan, true
 }
@@ -257,7 +260,7 @@ func (o *WebServiceDetailsPOST) GetPullRequestPreviewsEnabled() string {
 // and a boolean to check if the value has been set.
 func (o *WebServiceDetailsPOST) GetPullRequestPreviewsEnabledOk() (*string, bool) {
 	if o == nil || isNil(o.PullRequestPreviewsEnabled) {
-    return nil, false
+		return nil, false
 	}
 	return o.PullRequestPreviewsEnabled, true
 }
@@ -289,7 +292,7 @@ func (o *WebServiceDetailsPOST) GetRegion() Region {
 // and a boolean to check if the value has been set.
 func (o *WebServiceDetailsPOST) GetRegionOk() (*Region, bool) {
 	if o == nil || isNil(o.Region) {
-    return nil, false
+		return nil, false
 	}
 	return o.Region, true
 }
@@ -309,13 +312,19 @@ func (o *WebServiceDetailsPOST) SetRegion(v Region) {
 }
 
 func (o WebServiceDetailsPOST) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o WebServiceDetailsPOST) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !isNil(o.Disk) {
 		toSerialize["disk"] = o.Disk
 	}
-	if true {
-		toSerialize["env"] = o.Env
-	}
+	toSerialize["env"] = o.Env
 	if !isNil(o.EnvSpecificDetails) {
 		toSerialize["envSpecificDetails"] = o.EnvSpecificDetails
 	}
@@ -334,7 +343,7 @@ func (o WebServiceDetailsPOST) MarshalJSON() ([]byte, error) {
 	if !isNil(o.Region) {
 		toSerialize["region"] = o.Region
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullableWebServiceDetailsPOST struct {

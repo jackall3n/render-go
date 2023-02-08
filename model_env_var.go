@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the EnvVar type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &EnvVar{}
+
 // EnvVar struct for EnvVar
 type EnvVar struct {
 	Key string `json:"key"`
@@ -54,7 +57,7 @@ func (o *EnvVar) GetKey() string {
 // and a boolean to check if the value has been set.
 func (o *EnvVar) GetKeyOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.Key, true
 }
@@ -78,7 +81,7 @@ func (o *EnvVar) GetValue() string {
 // and a boolean to check if the value has been set.
 func (o *EnvVar) GetValueOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.Value, true
 }
@@ -89,14 +92,18 @@ func (o *EnvVar) SetValue(v string) {
 }
 
 func (o EnvVar) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["key"] = o.Key
-	}
-	if true {
-		toSerialize["value"] = o.Value
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o EnvVar) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["key"] = o.Key
+	toSerialize["value"] = o.Value
+	return toSerialize, nil
 }
 
 type NullableEnvVar struct {

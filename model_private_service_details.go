@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the PrivateServiceDetails type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &PrivateServiceDetails{}
+
 // PrivateServiceDetails struct for PrivateServiceDetails
 type PrivateServiceDetails struct {
 	Disk *StaticSiteDetailsParentServer `json:"disk,omitempty"`
@@ -59,7 +62,7 @@ func (o *PrivateServiceDetails) GetDisk() StaticSiteDetailsParentServer {
 // and a boolean to check if the value has been set.
 func (o *PrivateServiceDetails) GetDiskOk() (*StaticSiteDetailsParentServer, bool) {
 	if o == nil || isNil(o.Disk) {
-    return nil, false
+		return nil, false
 	}
 	return o.Disk, true
 }
@@ -91,7 +94,7 @@ func (o *PrivateServiceDetails) GetEnv() ServiceEnv {
 // and a boolean to check if the value has been set.
 func (o *PrivateServiceDetails) GetEnvOk() (*ServiceEnv, bool) {
 	if o == nil || isNil(o.Env) {
-    return nil, false
+		return nil, false
 	}
 	return o.Env, true
 }
@@ -123,7 +126,7 @@ func (o *PrivateServiceDetails) GetEnvSpecificDetails() WebServiceDetailsEnvSpec
 // and a boolean to check if the value has been set.
 func (o *PrivateServiceDetails) GetEnvSpecificDetailsOk() (*WebServiceDetailsEnvSpecificDetails, bool) {
 	if o == nil || isNil(o.EnvSpecificDetails) {
-    return nil, false
+		return nil, false
 	}
 	return o.EnvSpecificDetails, true
 }
@@ -155,7 +158,7 @@ func (o *PrivateServiceDetails) GetNumInstances() int32 {
 // and a boolean to check if the value has been set.
 func (o *PrivateServiceDetails) GetNumInstancesOk() (*int32, bool) {
 	if o == nil || isNil(o.NumInstances) {
-    return nil, false
+		return nil, false
 	}
 	return o.NumInstances, true
 }
@@ -187,7 +190,7 @@ func (o *PrivateServiceDetails) GetOpenPorts() []ServerPort {
 // and a boolean to check if the value has been set.
 func (o *PrivateServiceDetails) GetOpenPortsOk() ([]ServerPort, bool) {
 	if o == nil || isNil(o.OpenPorts) {
-    return nil, false
+		return nil, false
 	}
 	return o.OpenPorts, true
 }
@@ -219,7 +222,7 @@ func (o *PrivateServiceDetails) GetParentServer() StaticSiteDetailsParentServer 
 // and a boolean to check if the value has been set.
 func (o *PrivateServiceDetails) GetParentServerOk() (*StaticSiteDetailsParentServer, bool) {
 	if o == nil || isNil(o.ParentServer) {
-    return nil, false
+		return nil, false
 	}
 	return o.ParentServer, true
 }
@@ -251,7 +254,7 @@ func (o *PrivateServiceDetails) GetPlan() string {
 // and a boolean to check if the value has been set.
 func (o *PrivateServiceDetails) GetPlanOk() (*string, bool) {
 	if o == nil || isNil(o.Plan) {
-    return nil, false
+		return nil, false
 	}
 	return o.Plan, true
 }
@@ -283,7 +286,7 @@ func (o *PrivateServiceDetails) GetPullRequestPreviewsEnabled() string {
 // and a boolean to check if the value has been set.
 func (o *PrivateServiceDetails) GetPullRequestPreviewsEnabledOk() (*string, bool) {
 	if o == nil || isNil(o.PullRequestPreviewsEnabled) {
-    return nil, false
+		return nil, false
 	}
 	return o.PullRequestPreviewsEnabled, true
 }
@@ -315,7 +318,7 @@ func (o *PrivateServiceDetails) GetRegion() Region {
 // and a boolean to check if the value has been set.
 func (o *PrivateServiceDetails) GetRegionOk() (*Region, bool) {
 	if o == nil || isNil(o.Region) {
-    return nil, false
+		return nil, false
 	}
 	return o.Region, true
 }
@@ -347,7 +350,7 @@ func (o *PrivateServiceDetails) GetUrl() string {
 // and a boolean to check if the value has been set.
 func (o *PrivateServiceDetails) GetUrlOk() (*string, bool) {
 	if o == nil || isNil(o.Url) {
-    return nil, false
+		return nil, false
 	}
 	return o.Url, true
 }
@@ -367,6 +370,14 @@ func (o *PrivateServiceDetails) SetUrl(v string) {
 }
 
 func (o PrivateServiceDetails) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o PrivateServiceDetails) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !isNil(o.Disk) {
 		toSerialize["disk"] = o.Disk
@@ -398,7 +409,7 @@ func (o PrivateServiceDetails) MarshalJSON() ([]byte, error) {
 	if !isNil(o.Url) {
 		toSerialize["url"] = o.Url
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullablePrivateServiceDetails struct {

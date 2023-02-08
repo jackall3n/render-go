@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the StaticSiteDetailsPOST type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &StaticSiteDetailsPOST{}
+
 // StaticSiteDetailsPOST struct for StaticSiteDetailsPOST
 type StaticSiteDetailsPOST struct {
 	BuildCommand *string `json:"buildCommand,omitempty"`
@@ -64,7 +67,7 @@ func (o *StaticSiteDetailsPOST) GetBuildCommand() string {
 // and a boolean to check if the value has been set.
 func (o *StaticSiteDetailsPOST) GetBuildCommandOk() (*string, bool) {
 	if o == nil || isNil(o.BuildCommand) {
-    return nil, false
+		return nil, false
 	}
 	return o.BuildCommand, true
 }
@@ -96,7 +99,7 @@ func (o *StaticSiteDetailsPOST) GetHeaders() []Header {
 // and a boolean to check if the value has been set.
 func (o *StaticSiteDetailsPOST) GetHeadersOk() ([]Header, bool) {
 	if o == nil || isNil(o.Headers) {
-    return nil, false
+		return nil, false
 	}
 	return o.Headers, true
 }
@@ -128,7 +131,7 @@ func (o *StaticSiteDetailsPOST) GetPublishPath() string {
 // and a boolean to check if the value has been set.
 func (o *StaticSiteDetailsPOST) GetPublishPathOk() (*string, bool) {
 	if o == nil || isNil(o.PublishPath) {
-    return nil, false
+		return nil, false
 	}
 	return o.PublishPath, true
 }
@@ -160,7 +163,7 @@ func (o *StaticSiteDetailsPOST) GetPullRequestPreviewsEnabled() string {
 // and a boolean to check if the value has been set.
 func (o *StaticSiteDetailsPOST) GetPullRequestPreviewsEnabledOk() (*string, bool) {
 	if o == nil || isNil(o.PullRequestPreviewsEnabled) {
-    return nil, false
+		return nil, false
 	}
 	return o.PullRequestPreviewsEnabled, true
 }
@@ -192,7 +195,7 @@ func (o *StaticSiteDetailsPOST) GetRoutes() []Route {
 // and a boolean to check if the value has been set.
 func (o *StaticSiteDetailsPOST) GetRoutesOk() ([]Route, bool) {
 	if o == nil || isNil(o.Routes) {
-    return nil, false
+		return nil, false
 	}
 	return o.Routes, true
 }
@@ -212,6 +215,14 @@ func (o *StaticSiteDetailsPOST) SetRoutes(v []Route) {
 }
 
 func (o StaticSiteDetailsPOST) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o StaticSiteDetailsPOST) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !isNil(o.BuildCommand) {
 		toSerialize["buildCommand"] = o.BuildCommand
@@ -228,7 +239,7 @@ func (o StaticSiteDetailsPOST) MarshalJSON() ([]byte, error) {
 	if !isNil(o.Routes) {
 		toSerialize["routes"] = o.Routes
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullableStaticSiteDetailsPOST struct {

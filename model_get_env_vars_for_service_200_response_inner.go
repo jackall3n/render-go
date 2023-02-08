@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the GetEnvVarsForService200ResponseInner type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &GetEnvVarsForService200ResponseInner{}
+
 // GetEnvVarsForService200ResponseInner struct for GetEnvVarsForService200ResponseInner
 type GetEnvVarsForService200ResponseInner struct {
 	EnvVar *EnvVar `json:"envVar,omitempty"`
@@ -51,7 +54,7 @@ func (o *GetEnvVarsForService200ResponseInner) GetEnvVar() EnvVar {
 // and a boolean to check if the value has been set.
 func (o *GetEnvVarsForService200ResponseInner) GetEnvVarOk() (*EnvVar, bool) {
 	if o == nil || isNil(o.EnvVar) {
-    return nil, false
+		return nil, false
 	}
 	return o.EnvVar, true
 }
@@ -83,7 +86,7 @@ func (o *GetEnvVarsForService200ResponseInner) GetCursor() string {
 // and a boolean to check if the value has been set.
 func (o *GetEnvVarsForService200ResponseInner) GetCursorOk() (*string, bool) {
 	if o == nil || isNil(o.Cursor) {
-    return nil, false
+		return nil, false
 	}
 	return o.Cursor, true
 }
@@ -103,6 +106,14 @@ func (o *GetEnvVarsForService200ResponseInner) SetCursor(v string) {
 }
 
 func (o GetEnvVarsForService200ResponseInner) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o GetEnvVarsForService200ResponseInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !isNil(o.EnvVar) {
 		toSerialize["envVar"] = o.EnvVar
@@ -110,7 +121,7 @@ func (o GetEnvVarsForService200ResponseInner) MarshalJSON() ([]byte, error) {
 	if !isNil(o.Cursor) {
 		toSerialize["cursor"] = o.Cursor
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullableGetEnvVarsForService200ResponseInner struct {

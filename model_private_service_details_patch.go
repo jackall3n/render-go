@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the PrivateServiceDetailsPATCH type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &PrivateServiceDetailsPATCH{}
+
 // PrivateServiceDetailsPATCH struct for PrivateServiceDetailsPATCH
 type PrivateServiceDetailsPATCH struct {
 	EnvSpecificDetails *WebServiceDetailsPATCHEnvSpecificDetails `json:"envSpecificDetails,omitempty"`
@@ -53,7 +56,7 @@ func (o *PrivateServiceDetailsPATCH) GetEnvSpecificDetails() WebServiceDetailsPA
 // and a boolean to check if the value has been set.
 func (o *PrivateServiceDetailsPATCH) GetEnvSpecificDetailsOk() (*WebServiceDetailsPATCHEnvSpecificDetails, bool) {
 	if o == nil || isNil(o.EnvSpecificDetails) {
-    return nil, false
+		return nil, false
 	}
 	return o.EnvSpecificDetails, true
 }
@@ -85,7 +88,7 @@ func (o *PrivateServiceDetailsPATCH) GetNumInstances() int32 {
 // and a boolean to check if the value has been set.
 func (o *PrivateServiceDetailsPATCH) GetNumInstancesOk() (*int32, bool) {
 	if o == nil || isNil(o.NumInstances) {
-    return nil, false
+		return nil, false
 	}
 	return o.NumInstances, true
 }
@@ -117,7 +120,7 @@ func (o *PrivateServiceDetailsPATCH) GetPlan() string {
 // and a boolean to check if the value has been set.
 func (o *PrivateServiceDetailsPATCH) GetPlanOk() (*string, bool) {
 	if o == nil || isNil(o.Plan) {
-    return nil, false
+		return nil, false
 	}
 	return o.Plan, true
 }
@@ -149,7 +152,7 @@ func (o *PrivateServiceDetailsPATCH) GetPullRequestPreviewsEnabled() string {
 // and a boolean to check if the value has been set.
 func (o *PrivateServiceDetailsPATCH) GetPullRequestPreviewsEnabledOk() (*string, bool) {
 	if o == nil || isNil(o.PullRequestPreviewsEnabled) {
-    return nil, false
+		return nil, false
 	}
 	return o.PullRequestPreviewsEnabled, true
 }
@@ -169,6 +172,14 @@ func (o *PrivateServiceDetailsPATCH) SetPullRequestPreviewsEnabled(v string) {
 }
 
 func (o PrivateServiceDetailsPATCH) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o PrivateServiceDetailsPATCH) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !isNil(o.EnvSpecificDetails) {
 		toSerialize["envSpecificDetails"] = o.EnvSpecificDetails
@@ -182,7 +193,7 @@ func (o PrivateServiceDetailsPATCH) MarshalJSON() ([]byte, error) {
 	if !isNil(o.PullRequestPreviewsEnabled) {
 		toSerialize["pullRequestPreviewsEnabled"] = o.PullRequestPreviewsEnabled
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullablePrivateServiceDetailsPATCH struct {

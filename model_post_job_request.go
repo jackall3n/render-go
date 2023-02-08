@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the PostJobRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &PostJobRequest{}
+
 // PostJobRequest struct for PostJobRequest
 type PostJobRequest struct {
 	StartCommand string `json:"startCommand"`
@@ -53,7 +56,7 @@ func (o *PostJobRequest) GetStartCommand() string {
 // and a boolean to check if the value has been set.
 func (o *PostJobRequest) GetStartCommandOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.StartCommand, true
 }
@@ -76,7 +79,7 @@ func (o *PostJobRequest) GetPlanId() string {
 // and a boolean to check if the value has been set.
 func (o *PostJobRequest) GetPlanIdOk() (*string, bool) {
 	if o == nil || isNil(o.PlanId) {
-    return nil, false
+		return nil, false
 	}
 	return o.PlanId, true
 }
@@ -96,14 +99,20 @@ func (o *PostJobRequest) SetPlanId(v string) {
 }
 
 func (o PostJobRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["startCommand"] = o.StartCommand
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
+	return json.Marshal(toSerialize)
+}
+
+func (o PostJobRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["startCommand"] = o.StartCommand
 	if !isNil(o.PlanId) {
 		toSerialize["planId"] = o.PlanId
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullablePostJobRequest struct {

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ServerPort type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ServerPort{}
+
 // ServerPort struct for ServerPort
 type ServerPort struct {
 	Port *int32 `json:"port,omitempty"`
@@ -51,7 +54,7 @@ func (o *ServerPort) GetPort() int32 {
 // and a boolean to check if the value has been set.
 func (o *ServerPort) GetPortOk() (*int32, bool) {
 	if o == nil || isNil(o.Port) {
-    return nil, false
+		return nil, false
 	}
 	return o.Port, true
 }
@@ -83,7 +86,7 @@ func (o *ServerPort) GetProtocol() string {
 // and a boolean to check if the value has been set.
 func (o *ServerPort) GetProtocolOk() (*string, bool) {
 	if o == nil || isNil(o.Protocol) {
-    return nil, false
+		return nil, false
 	}
 	return o.Protocol, true
 }
@@ -103,6 +106,14 @@ func (o *ServerPort) SetProtocol(v string) {
 }
 
 func (o ServerPort) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o ServerPort) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !isNil(o.Port) {
 		toSerialize["port"] = o.Port
@@ -110,7 +121,7 @@ func (o ServerPort) MarshalJSON() ([]byte, error) {
 	if !isNil(o.Protocol) {
 		toSerialize["protocol"] = o.Protocol
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullableServerPort struct {

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the Owner type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Owner{}
+
 // Owner struct for Owner
 type Owner struct {
 	Id string `json:"id"`
@@ -55,7 +58,7 @@ func (o *Owner) GetId() string {
 // and a boolean to check if the value has been set.
 func (o *Owner) GetIdOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.Id, true
 }
@@ -78,7 +81,7 @@ func (o *Owner) GetName() string {
 // and a boolean to check if the value has been set.
 func (o *Owner) GetNameOk() (*string, bool) {
 	if o == nil || isNil(o.Name) {
-    return nil, false
+		return nil, false
 	}
 	return o.Name, true
 }
@@ -110,7 +113,7 @@ func (o *Owner) GetEmail() string {
 // and a boolean to check if the value has been set.
 func (o *Owner) GetEmailOk() (*string, bool) {
 	if o == nil || isNil(o.Email) {
-    return nil, false
+		return nil, false
 	}
 	return o.Email, true
 }
@@ -142,7 +145,7 @@ func (o *Owner) GetType() string {
 // and a boolean to check if the value has been set.
 func (o *Owner) GetTypeOk() (*string, bool) {
 	if o == nil || isNil(o.Type) {
-    return nil, false
+		return nil, false
 	}
 	return o.Type, true
 }
@@ -162,10 +165,16 @@ func (o *Owner) SetType(v string) {
 }
 
 func (o Owner) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["id"] = o.Id
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
+	return json.Marshal(toSerialize)
+}
+
+func (o Owner) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["id"] = o.Id
 	if !isNil(o.Name) {
 		toSerialize["name"] = o.Name
 	}
@@ -175,7 +184,7 @@ func (o Owner) MarshalJSON() ([]byte, error) {
 	if !isNil(o.Type) {
 		toSerialize["type"] = o.Type
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullableOwner struct {

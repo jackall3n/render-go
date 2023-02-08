@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the Header type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Header{}
+
 // Header struct for Header
 type Header struct {
 	Path string `json:"path"`
@@ -56,7 +59,7 @@ func (o *Header) GetPath() string {
 // and a boolean to check if the value has been set.
 func (o *Header) GetPathOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.Path, true
 }
@@ -80,7 +83,7 @@ func (o *Header) GetName() string {
 // and a boolean to check if the value has been set.
 func (o *Header) GetNameOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.Name, true
 }
@@ -104,7 +107,7 @@ func (o *Header) GetValue() string {
 // and a boolean to check if the value has been set.
 func (o *Header) GetValueOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.Value, true
 }
@@ -115,17 +118,19 @@ func (o *Header) SetValue(v string) {
 }
 
 func (o Header) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["path"] = o.Path
-	}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if true {
-		toSerialize["value"] = o.Value
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o Header) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["path"] = o.Path
+	toSerialize["name"] = o.Name
+	toSerialize["value"] = o.Value
+	return toSerialize, nil
 }
 
 type NullableHeader struct {

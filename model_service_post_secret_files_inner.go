@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ServicePOSTSecretFilesInner type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ServicePOSTSecretFilesInner{}
+
 // ServicePOSTSecretFilesInner struct for ServicePOSTSecretFilesInner
 type ServicePOSTSecretFilesInner struct {
 	Name string `json:"name"`
@@ -54,7 +57,7 @@ func (o *ServicePOSTSecretFilesInner) GetName() string {
 // and a boolean to check if the value has been set.
 func (o *ServicePOSTSecretFilesInner) GetNameOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.Name, true
 }
@@ -78,7 +81,7 @@ func (o *ServicePOSTSecretFilesInner) GetContents() string {
 // and a boolean to check if the value has been set.
 func (o *ServicePOSTSecretFilesInner) GetContentsOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.Contents, true
 }
@@ -89,14 +92,18 @@ func (o *ServicePOSTSecretFilesInner) SetContents(v string) {
 }
 
 func (o ServicePOSTSecretFilesInner) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if true {
-		toSerialize["contents"] = o.Contents
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ServicePOSTSecretFilesInner) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["name"] = o.Name
+	toSerialize["contents"] = o.Contents
+	return toSerialize, nil
 }
 
 type NullableServicePOSTSecretFilesInner struct {

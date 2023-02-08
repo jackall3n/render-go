@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the DeployCommit type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DeployCommit{}
+
 // DeployCommit struct for DeployCommit
 type DeployCommit struct {
 	Id *string `json:"id,omitempty"`
@@ -53,7 +56,7 @@ func (o *DeployCommit) GetId() string {
 // and a boolean to check if the value has been set.
 func (o *DeployCommit) GetIdOk() (*string, bool) {
 	if o == nil || isNil(o.Id) {
-    return nil, false
+		return nil, false
 	}
 	return o.Id, true
 }
@@ -85,7 +88,7 @@ func (o *DeployCommit) GetMessage() string {
 // and a boolean to check if the value has been set.
 func (o *DeployCommit) GetMessageOk() (*string, bool) {
 	if o == nil || isNil(o.Message) {
-    return nil, false
+		return nil, false
 	}
 	return o.Message, true
 }
@@ -117,7 +120,7 @@ func (o *DeployCommit) GetCreatedAt() time.Time {
 // and a boolean to check if the value has been set.
 func (o *DeployCommit) GetCreatedAtOk() (*time.Time, bool) {
 	if o == nil || isNil(o.CreatedAt) {
-    return nil, false
+		return nil, false
 	}
 	return o.CreatedAt, true
 }
@@ -137,6 +140,14 @@ func (o *DeployCommit) SetCreatedAt(v time.Time) {
 }
 
 func (o DeployCommit) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o DeployCommit) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !isNil(o.Id) {
 		toSerialize["id"] = o.Id
@@ -147,7 +158,7 @@ func (o DeployCommit) MarshalJSON() ([]byte, error) {
 	if !isNil(o.CreatedAt) {
 		toSerialize["createdAt"] = o.CreatedAt
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullableDeployCommit struct {

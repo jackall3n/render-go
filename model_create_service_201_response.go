@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CreateService201Response type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CreateService201Response{}
+
 // CreateService201Response struct for CreateService201Response
 type CreateService201Response struct {
 	Service *Service `json:"service,omitempty"`
@@ -51,7 +54,7 @@ func (o *CreateService201Response) GetService() Service {
 // and a boolean to check if the value has been set.
 func (o *CreateService201Response) GetServiceOk() (*Service, bool) {
 	if o == nil || isNil(o.Service) {
-    return nil, false
+		return nil, false
 	}
 	return o.Service, true
 }
@@ -83,7 +86,7 @@ func (o *CreateService201Response) GetDeployId() string {
 // and a boolean to check if the value has been set.
 func (o *CreateService201Response) GetDeployIdOk() (*string, bool) {
 	if o == nil || isNil(o.DeployId) {
-    return nil, false
+		return nil, false
 	}
 	return o.DeployId, true
 }
@@ -103,6 +106,14 @@ func (o *CreateService201Response) SetDeployId(v string) {
 }
 
 func (o CreateService201Response) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o CreateService201Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !isNil(o.Service) {
 		toSerialize["service"] = o.Service
@@ -110,7 +121,7 @@ func (o CreateService201Response) MarshalJSON() ([]byte, error) {
 	if !isNil(o.DeployId) {
 		toSerialize["deployId"] = o.DeployId
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullableCreateService201Response struct {

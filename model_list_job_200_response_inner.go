@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ListJob200ResponseInner type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ListJob200ResponseInner{}
+
 // ListJob200ResponseInner struct for ListJob200ResponseInner
 type ListJob200ResponseInner struct {
 	Job *Job `json:"job,omitempty"`
@@ -51,7 +54,7 @@ func (o *ListJob200ResponseInner) GetJob() Job {
 // and a boolean to check if the value has been set.
 func (o *ListJob200ResponseInner) GetJobOk() (*Job, bool) {
 	if o == nil || isNil(o.Job) {
-    return nil, false
+		return nil, false
 	}
 	return o.Job, true
 }
@@ -83,7 +86,7 @@ func (o *ListJob200ResponseInner) GetCursor() string {
 // and a boolean to check if the value has been set.
 func (o *ListJob200ResponseInner) GetCursorOk() (*string, bool) {
 	if o == nil || isNil(o.Cursor) {
-    return nil, false
+		return nil, false
 	}
 	return o.Cursor, true
 }
@@ -103,6 +106,14 @@ func (o *ListJob200ResponseInner) SetCursor(v string) {
 }
 
 func (o ListJob200ResponseInner) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o ListJob200ResponseInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !isNil(o.Job) {
 		toSerialize["job"] = o.Job
@@ -110,7 +121,7 @@ func (o ListJob200ResponseInner) MarshalJSON() ([]byte, error) {
 	if !isNil(o.Cursor) {
 		toSerialize["cursor"] = o.Cursor
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullableListJob200ResponseInner struct {

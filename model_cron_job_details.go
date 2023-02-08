@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the CronJobDetails type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CronJobDetails{}
+
 // CronJobDetails struct for CronJobDetails
 type CronJobDetails struct {
 	Env *ServiceEnv `json:"env,omitempty"`
@@ -56,7 +59,7 @@ func (o *CronJobDetails) GetEnv() ServiceEnv {
 // and a boolean to check if the value has been set.
 func (o *CronJobDetails) GetEnvOk() (*ServiceEnv, bool) {
 	if o == nil || isNil(o.Env) {
-    return nil, false
+		return nil, false
 	}
 	return o.Env, true
 }
@@ -88,7 +91,7 @@ func (o *CronJobDetails) GetEnvSpecificDetails() WebServiceDetailsEnvSpecificDet
 // and a boolean to check if the value has been set.
 func (o *CronJobDetails) GetEnvSpecificDetailsOk() (*WebServiceDetailsEnvSpecificDetails, bool) {
 	if o == nil || isNil(o.EnvSpecificDetails) {
-    return nil, false
+		return nil, false
 	}
 	return o.EnvSpecificDetails, true
 }
@@ -120,7 +123,7 @@ func (o *CronJobDetails) GetLastSuccessfulRunAt() time.Time {
 // and a boolean to check if the value has been set.
 func (o *CronJobDetails) GetLastSuccessfulRunAtOk() (*time.Time, bool) {
 	if o == nil || isNil(o.LastSuccessfulRunAt) {
-    return nil, false
+		return nil, false
 	}
 	return o.LastSuccessfulRunAt, true
 }
@@ -152,7 +155,7 @@ func (o *CronJobDetails) GetPlan() string {
 // and a boolean to check if the value has been set.
 func (o *CronJobDetails) GetPlanOk() (*string, bool) {
 	if o == nil || isNil(o.Plan) {
-    return nil, false
+		return nil, false
 	}
 	return o.Plan, true
 }
@@ -184,7 +187,7 @@ func (o *CronJobDetails) GetRegion() Region {
 // and a boolean to check if the value has been set.
 func (o *CronJobDetails) GetRegionOk() (*Region, bool) {
 	if o == nil || isNil(o.Region) {
-    return nil, false
+		return nil, false
 	}
 	return o.Region, true
 }
@@ -216,7 +219,7 @@ func (o *CronJobDetails) GetSchedule() string {
 // and a boolean to check if the value has been set.
 func (o *CronJobDetails) GetScheduleOk() (*string, bool) {
 	if o == nil || isNil(o.Schedule) {
-    return nil, false
+		return nil, false
 	}
 	return o.Schedule, true
 }
@@ -236,6 +239,14 @@ func (o *CronJobDetails) SetSchedule(v string) {
 }
 
 func (o CronJobDetails) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o CronJobDetails) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !isNil(o.Env) {
 		toSerialize["env"] = o.Env
@@ -255,7 +266,7 @@ func (o CronJobDetails) MarshalJSON() ([]byte, error) {
 	if !isNil(o.Schedule) {
 		toSerialize["schedule"] = o.Schedule
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullableCronJobDetails struct {

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the StaticSiteDetails type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &StaticSiteDetails{}
+
 // StaticSiteDetails struct for StaticSiteDetails
 type StaticSiteDetails struct {
 	BuildCommand *string `json:"buildCommand,omitempty"`
@@ -54,7 +57,7 @@ func (o *StaticSiteDetails) GetBuildCommand() string {
 // and a boolean to check if the value has been set.
 func (o *StaticSiteDetails) GetBuildCommandOk() (*string, bool) {
 	if o == nil || isNil(o.BuildCommand) {
-    return nil, false
+		return nil, false
 	}
 	return o.BuildCommand, true
 }
@@ -86,7 +89,7 @@ func (o *StaticSiteDetails) GetParentServer() StaticSiteDetailsParentServer {
 // and a boolean to check if the value has been set.
 func (o *StaticSiteDetails) GetParentServerOk() (*StaticSiteDetailsParentServer, bool) {
 	if o == nil || isNil(o.ParentServer) {
-    return nil, false
+		return nil, false
 	}
 	return o.ParentServer, true
 }
@@ -118,7 +121,7 @@ func (o *StaticSiteDetails) GetPublishPath() string {
 // and a boolean to check if the value has been set.
 func (o *StaticSiteDetails) GetPublishPathOk() (*string, bool) {
 	if o == nil || isNil(o.PublishPath) {
-    return nil, false
+		return nil, false
 	}
 	return o.PublishPath, true
 }
@@ -150,7 +153,7 @@ func (o *StaticSiteDetails) GetPullRequestPreviewsEnabled() string {
 // and a boolean to check if the value has been set.
 func (o *StaticSiteDetails) GetPullRequestPreviewsEnabledOk() (*string, bool) {
 	if o == nil || isNil(o.PullRequestPreviewsEnabled) {
-    return nil, false
+		return nil, false
 	}
 	return o.PullRequestPreviewsEnabled, true
 }
@@ -182,7 +185,7 @@ func (o *StaticSiteDetails) GetUrl() string {
 // and a boolean to check if the value has been set.
 func (o *StaticSiteDetails) GetUrlOk() (*string, bool) {
 	if o == nil || isNil(o.Url) {
-    return nil, false
+		return nil, false
 	}
 	return o.Url, true
 }
@@ -202,6 +205,14 @@ func (o *StaticSiteDetails) SetUrl(v string) {
 }
 
 func (o StaticSiteDetails) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o StaticSiteDetails) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !isNil(o.BuildCommand) {
 		toSerialize["buildCommand"] = o.BuildCommand
@@ -218,7 +229,7 @@ func (o StaticSiteDetails) MarshalJSON() ([]byte, error) {
 	if !isNil(o.Url) {
 		toSerialize["url"] = o.Url
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullableStaticSiteDetails struct {

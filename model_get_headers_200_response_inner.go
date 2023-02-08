@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the GetHeaders200ResponseInner type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &GetHeaders200ResponseInner{}
+
 // GetHeaders200ResponseInner struct for GetHeaders200ResponseInner
 type GetHeaders200ResponseInner struct {
 	Headers *Header `json:"headers,omitempty"`
@@ -51,7 +54,7 @@ func (o *GetHeaders200ResponseInner) GetHeaders() Header {
 // and a boolean to check if the value has been set.
 func (o *GetHeaders200ResponseInner) GetHeadersOk() (*Header, bool) {
 	if o == nil || isNil(o.Headers) {
-    return nil, false
+		return nil, false
 	}
 	return o.Headers, true
 }
@@ -83,7 +86,7 @@ func (o *GetHeaders200ResponseInner) GetCursor() string {
 // and a boolean to check if the value has been set.
 func (o *GetHeaders200ResponseInner) GetCursorOk() (*string, bool) {
 	if o == nil || isNil(o.Cursor) {
-    return nil, false
+		return nil, false
 	}
 	return o.Cursor, true
 }
@@ -103,6 +106,14 @@ func (o *GetHeaders200ResponseInner) SetCursor(v string) {
 }
 
 func (o GetHeaders200ResponseInner) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o GetHeaders200ResponseInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !isNil(o.Headers) {
 		toSerialize["headers"] = o.Headers
@@ -110,7 +121,7 @@ func (o GetHeaders200ResponseInner) MarshalJSON() ([]byte, error) {
 	if !isNil(o.Cursor) {
 		toSerialize["cursor"] = o.Cursor
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullableGetHeaders200ResponseInner struct {

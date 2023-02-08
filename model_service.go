@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the Service type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Service{}
+
 // Service struct for Service
 type Service struct {
 	Id *string `json:"id,omitempty"`
@@ -64,7 +67,7 @@ func (o *Service) GetId() string {
 // and a boolean to check if the value has been set.
 func (o *Service) GetIdOk() (*string, bool) {
 	if o == nil || isNil(o.Id) {
-    return nil, false
+		return nil, false
 	}
 	return o.Id, true
 }
@@ -96,7 +99,7 @@ func (o *Service) GetAutoDeploy() string {
 // and a boolean to check if the value has been set.
 func (o *Service) GetAutoDeployOk() (*string, bool) {
 	if o == nil || isNil(o.AutoDeploy) {
-    return nil, false
+		return nil, false
 	}
 	return o.AutoDeploy, true
 }
@@ -128,7 +131,7 @@ func (o *Service) GetBranch() string {
 // and a boolean to check if the value has been set.
 func (o *Service) GetBranchOk() (*string, bool) {
 	if o == nil || isNil(o.Branch) {
-    return nil, false
+		return nil, false
 	}
 	return o.Branch, true
 }
@@ -160,7 +163,7 @@ func (o *Service) GetCreatedAt() time.Time {
 // and a boolean to check if the value has been set.
 func (o *Service) GetCreatedAtOk() (*time.Time, bool) {
 	if o == nil || isNil(o.CreatedAt) {
-    return nil, false
+		return nil, false
 	}
 	return o.CreatedAt, true
 }
@@ -192,7 +195,7 @@ func (o *Service) GetName() string {
 // and a boolean to check if the value has been set.
 func (o *Service) GetNameOk() (*string, bool) {
 	if o == nil || isNil(o.Name) {
-    return nil, false
+		return nil, false
 	}
 	return o.Name, true
 }
@@ -224,7 +227,7 @@ func (o *Service) GetNotifyOnFail() NotifySetting {
 // and a boolean to check if the value has been set.
 func (o *Service) GetNotifyOnFailOk() (*NotifySetting, bool) {
 	if o == nil || isNil(o.NotifyOnFail) {
-    return nil, false
+		return nil, false
 	}
 	return o.NotifyOnFail, true
 }
@@ -256,7 +259,7 @@ func (o *Service) GetOwnerId() string {
 // and a boolean to check if the value has been set.
 func (o *Service) GetOwnerIdOk() (*string, bool) {
 	if o == nil || isNil(o.OwnerId) {
-    return nil, false
+		return nil, false
 	}
 	return o.OwnerId, true
 }
@@ -288,7 +291,7 @@ func (o *Service) GetRepo() string {
 // and a boolean to check if the value has been set.
 func (o *Service) GetRepoOk() (*string, bool) {
 	if o == nil || isNil(o.Repo) {
-    return nil, false
+		return nil, false
 	}
 	return o.Repo, true
 }
@@ -320,7 +323,7 @@ func (o *Service) GetSlug() string {
 // and a boolean to check if the value has been set.
 func (o *Service) GetSlugOk() (*string, bool) {
 	if o == nil || isNil(o.Slug) {
-    return nil, false
+		return nil, false
 	}
 	return o.Slug, true
 }
@@ -352,7 +355,7 @@ func (o *Service) GetSuspended() string {
 // and a boolean to check if the value has been set.
 func (o *Service) GetSuspendedOk() (*string, bool) {
 	if o == nil || isNil(o.Suspended) {
-    return nil, false
+		return nil, false
 	}
 	return o.Suspended, true
 }
@@ -384,7 +387,7 @@ func (o *Service) GetSuspenders() []SuspenderType {
 // and a boolean to check if the value has been set.
 func (o *Service) GetSuspendersOk() ([]SuspenderType, bool) {
 	if o == nil || isNil(o.Suspenders) {
-    return nil, false
+		return nil, false
 	}
 	return o.Suspenders, true
 }
@@ -416,7 +419,7 @@ func (o *Service) GetType() ServiceType {
 // and a boolean to check if the value has been set.
 func (o *Service) GetTypeOk() (*ServiceType, bool) {
 	if o == nil || isNil(o.Type) {
-    return nil, false
+		return nil, false
 	}
 	return o.Type, true
 }
@@ -448,7 +451,7 @@ func (o *Service) GetUpdatedAt() time.Time {
 // and a boolean to check if the value has been set.
 func (o *Service) GetUpdatedAtOk() (*time.Time, bool) {
 	if o == nil || isNil(o.UpdatedAt) {
-    return nil, false
+		return nil, false
 	}
 	return o.UpdatedAt, true
 }
@@ -480,7 +483,7 @@ func (o *Service) GetServiceDetails() ServiceServiceDetails {
 // and a boolean to check if the value has been set.
 func (o *Service) GetServiceDetailsOk() (*ServiceServiceDetails, bool) {
 	if o == nil || isNil(o.ServiceDetails) {
-    return nil, false
+		return nil, false
 	}
 	return o.ServiceDetails, true
 }
@@ -500,6 +503,14 @@ func (o *Service) SetServiceDetails(v ServiceServiceDetails) {
 }
 
 func (o Service) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o Service) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !isNil(o.Id) {
 		toSerialize["id"] = o.Id
@@ -543,7 +554,7 @@ func (o Service) MarshalJSON() ([]byte, error) {
 	if !isNil(o.ServiceDetails) {
 		toSerialize["serviceDetails"] = o.ServiceDetails
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullableService struct {

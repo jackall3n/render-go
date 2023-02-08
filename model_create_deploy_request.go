@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the CreateDeployRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CreateDeployRequest{}
+
 // CreateDeployRequest struct for CreateDeployRequest
 type CreateDeployRequest struct {
 	// Defaults to \"do_not_clear\"
@@ -55,7 +58,7 @@ func (o *CreateDeployRequest) GetClearCache() string {
 // and a boolean to check if the value has been set.
 func (o *CreateDeployRequest) GetClearCacheOk() (*string, bool) {
 	if o == nil || isNil(o.ClearCache) {
-    return nil, false
+		return nil, false
 	}
 	return o.ClearCache, true
 }
@@ -75,11 +78,19 @@ func (o *CreateDeployRequest) SetClearCache(v string) {
 }
 
 func (o CreateDeployRequest) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o CreateDeployRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !isNil(o.ClearCache) {
 		toSerialize["clearCache"] = o.ClearCache
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullableCreateDeployRequest struct {

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ServicePOST type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ServicePOST{}
+
 // ServicePOST struct for ServicePOST
 type ServicePOST struct {
 	Type ServiceType `json:"type"`
@@ -70,7 +73,7 @@ func (o *ServicePOST) GetType() ServiceType {
 // and a boolean to check if the value has been set.
 func (o *ServicePOST) GetTypeOk() (*ServiceType, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.Type, true
 }
@@ -94,7 +97,7 @@ func (o *ServicePOST) GetName() string {
 // and a boolean to check if the value has been set.
 func (o *ServicePOST) GetNameOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.Name, true
 }
@@ -118,7 +121,7 @@ func (o *ServicePOST) GetOwnerId() string {
 // and a boolean to check if the value has been set.
 func (o *ServicePOST) GetOwnerIdOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.OwnerId, true
 }
@@ -142,7 +145,7 @@ func (o *ServicePOST) GetRepo() string {
 // and a boolean to check if the value has been set.
 func (o *ServicePOST) GetRepoOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.Repo, true
 }
@@ -165,7 +168,7 @@ func (o *ServicePOST) GetAutoDeploy() string {
 // and a boolean to check if the value has been set.
 func (o *ServicePOST) GetAutoDeployOk() (*string, bool) {
 	if o == nil || isNil(o.AutoDeploy) {
-    return nil, false
+		return nil, false
 	}
 	return o.AutoDeploy, true
 }
@@ -197,7 +200,7 @@ func (o *ServicePOST) GetBranch() string {
 // and a boolean to check if the value has been set.
 func (o *ServicePOST) GetBranchOk() (*string, bool) {
 	if o == nil || isNil(o.Branch) {
-    return nil, false
+		return nil, false
 	}
 	return o.Branch, true
 }
@@ -229,7 +232,7 @@ func (o *ServicePOST) GetEnvVars() []UpdateEnvVarsForServiceRequestInner {
 // and a boolean to check if the value has been set.
 func (o *ServicePOST) GetEnvVarsOk() ([]UpdateEnvVarsForServiceRequestInner, bool) {
 	if o == nil || isNil(o.EnvVars) {
-    return nil, false
+		return nil, false
 	}
 	return o.EnvVars, true
 }
@@ -261,7 +264,7 @@ func (o *ServicePOST) GetSecretFiles() []ServicePOSTSecretFilesInner {
 // and a boolean to check if the value has been set.
 func (o *ServicePOST) GetSecretFilesOk() ([]ServicePOSTSecretFilesInner, bool) {
 	if o == nil || isNil(o.SecretFiles) {
-    return nil, false
+		return nil, false
 	}
 	return o.SecretFiles, true
 }
@@ -293,7 +296,7 @@ func (o *ServicePOST) GetServiceDetails() ServicePOSTServiceDetails {
 // and a boolean to check if the value has been set.
 func (o *ServicePOST) GetServiceDetailsOk() (*ServicePOSTServiceDetails, bool) {
 	if o == nil || isNil(o.ServiceDetails) {
-    return nil, false
+		return nil, false
 	}
 	return o.ServiceDetails, true
 }
@@ -313,19 +316,19 @@ func (o *ServicePOST) SetServiceDetails(v ServicePOSTServiceDetails) {
 }
 
 func (o ServicePOST) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o ServicePOST) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["type"] = o.Type
-	}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if true {
-		toSerialize["ownerId"] = o.OwnerId
-	}
-	if true {
-		toSerialize["repo"] = o.Repo
-	}
+	toSerialize["type"] = o.Type
+	toSerialize["name"] = o.Name
+	toSerialize["ownerId"] = o.OwnerId
+	toSerialize["repo"] = o.Repo
 	if !isNil(o.AutoDeploy) {
 		toSerialize["autoDeploy"] = o.AutoDeploy
 	}
@@ -341,7 +344,7 @@ func (o ServicePOST) MarshalJSON() ([]byte, error) {
 	if !isNil(o.ServiceDetails) {
 		toSerialize["serviceDetails"] = o.ServiceDetails
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullableServicePOST struct {

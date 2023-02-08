@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ModelError type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ModelError{}
+
 // ModelError struct for ModelError
 type ModelError struct {
 	Id *string `json:"id,omitempty"`
@@ -51,7 +54,7 @@ func (o *ModelError) GetId() string {
 // and a boolean to check if the value has been set.
 func (o *ModelError) GetIdOk() (*string, bool) {
 	if o == nil || isNil(o.Id) {
-    return nil, false
+		return nil, false
 	}
 	return o.Id, true
 }
@@ -83,7 +86,7 @@ func (o *ModelError) GetMessage() string {
 // and a boolean to check if the value has been set.
 func (o *ModelError) GetMessageOk() (*string, bool) {
 	if o == nil || isNil(o.Message) {
-    return nil, false
+		return nil, false
 	}
 	return o.Message, true
 }
@@ -103,6 +106,14 @@ func (o *ModelError) SetMessage(v string) {
 }
 
 func (o ModelError) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o ModelError) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !isNil(o.Id) {
 		toSerialize["id"] = o.Id
@@ -110,7 +121,7 @@ func (o ModelError) MarshalJSON() ([]byte, error) {
 	if !isNil(o.Message) {
 		toSerialize["message"] = o.Message
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullableModelError struct {

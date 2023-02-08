@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ScaleServiceRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ScaleServiceRequest{}
+
 // ScaleServiceRequest struct for ScaleServiceRequest
 type ScaleServiceRequest struct {
 	NumInstances int32 `json:"numInstances"`
@@ -52,7 +55,7 @@ func (o *ScaleServiceRequest) GetNumInstances() int32 {
 // and a boolean to check if the value has been set.
 func (o *ScaleServiceRequest) GetNumInstancesOk() (*int32, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.NumInstances, true
 }
@@ -63,11 +66,17 @@ func (o *ScaleServiceRequest) SetNumInstances(v int32) {
 }
 
 func (o ScaleServiceRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["numInstances"] = o.NumInstances
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ScaleServiceRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["numInstances"] = o.NumInstances
+	return toSerialize, nil
 }
 
 type NullableScaleServiceRequest struct {

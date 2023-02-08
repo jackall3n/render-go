@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the WebServiceDetailsPOSTDisk type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &WebServiceDetailsPOSTDisk{}
+
 // WebServiceDetailsPOSTDisk struct for WebServiceDetailsPOSTDisk
 type WebServiceDetailsPOSTDisk struct {
 	Name string `json:"name"`
@@ -60,7 +63,7 @@ func (o *WebServiceDetailsPOSTDisk) GetName() string {
 // and a boolean to check if the value has been set.
 func (o *WebServiceDetailsPOSTDisk) GetNameOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.Name, true
 }
@@ -84,7 +87,7 @@ func (o *WebServiceDetailsPOSTDisk) GetMountPath() string {
 // and a boolean to check if the value has been set.
 func (o *WebServiceDetailsPOSTDisk) GetMountPathOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.MountPath, true
 }
@@ -107,7 +110,7 @@ func (o *WebServiceDetailsPOSTDisk) GetSizeGB() int32 {
 // and a boolean to check if the value has been set.
 func (o *WebServiceDetailsPOSTDisk) GetSizeGBOk() (*int32, bool) {
 	if o == nil || isNil(o.SizeGB) {
-    return nil, false
+		return nil, false
 	}
 	return o.SizeGB, true
 }
@@ -127,17 +130,21 @@ func (o *WebServiceDetailsPOSTDisk) SetSizeGB(v int32) {
 }
 
 func (o WebServiceDetailsPOSTDisk) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o WebServiceDetailsPOSTDisk) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["name"] = o.Name
-	}
-	if true {
-		toSerialize["mountPath"] = o.MountPath
-	}
+	toSerialize["name"] = o.Name
+	toSerialize["mountPath"] = o.MountPath
 	if !isNil(o.SizeGB) {
 		toSerialize["sizeGB"] = o.SizeGB
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullableWebServiceDetailsPOSTDisk struct {

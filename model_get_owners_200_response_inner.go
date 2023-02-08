@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the GetOwners200ResponseInner type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &GetOwners200ResponseInner{}
+
 // GetOwners200ResponseInner struct for GetOwners200ResponseInner
 type GetOwners200ResponseInner struct {
 	Owner *Owner `json:"owner,omitempty"`
@@ -51,7 +54,7 @@ func (o *GetOwners200ResponseInner) GetOwner() Owner {
 // and a boolean to check if the value has been set.
 func (o *GetOwners200ResponseInner) GetOwnerOk() (*Owner, bool) {
 	if o == nil || isNil(o.Owner) {
-    return nil, false
+		return nil, false
 	}
 	return o.Owner, true
 }
@@ -83,7 +86,7 @@ func (o *GetOwners200ResponseInner) GetCursor() string {
 // and a boolean to check if the value has been set.
 func (o *GetOwners200ResponseInner) GetCursorOk() (*string, bool) {
 	if o == nil || isNil(o.Cursor) {
-    return nil, false
+		return nil, false
 	}
 	return o.Cursor, true
 }
@@ -103,6 +106,14 @@ func (o *GetOwners200ResponseInner) SetCursor(v string) {
 }
 
 func (o GetOwners200ResponseInner) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o GetOwners200ResponseInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !isNil(o.Owner) {
 		toSerialize["owner"] = o.Owner
@@ -110,7 +121,7 @@ func (o GetOwners200ResponseInner) MarshalJSON() ([]byte, error) {
 	if !isNil(o.Cursor) {
 		toSerialize["cursor"] = o.Cursor
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullableGetOwners200ResponseInner struct {

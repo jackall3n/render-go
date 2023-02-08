@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the MaybeDeploy type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &MaybeDeploy{}
+
 // MaybeDeploy struct for MaybeDeploy
 type MaybeDeploy struct {
 	TriggeringDeploy *string `json:"triggeringDeploy,omitempty"`
@@ -50,7 +53,7 @@ func (o *MaybeDeploy) GetTriggeringDeploy() string {
 // and a boolean to check if the value has been set.
 func (o *MaybeDeploy) GetTriggeringDeployOk() (*string, bool) {
 	if o == nil || isNil(o.TriggeringDeploy) {
-    return nil, false
+		return nil, false
 	}
 	return o.TriggeringDeploy, true
 }
@@ -70,11 +73,19 @@ func (o *MaybeDeploy) SetTriggeringDeploy(v string) {
 }
 
 func (o MaybeDeploy) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o MaybeDeploy) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !isNil(o.TriggeringDeploy) {
 		toSerialize["triggeringDeploy"] = o.TriggeringDeploy
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullableMaybeDeploy struct {

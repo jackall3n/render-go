@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the Route type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Route{}
+
 // Route struct for Route
 type Route struct {
 	Type string `json:"type"`
@@ -56,7 +59,7 @@ func (o *Route) GetType() string {
 // and a boolean to check if the value has been set.
 func (o *Route) GetTypeOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.Type, true
 }
@@ -80,7 +83,7 @@ func (o *Route) GetSource() string {
 // and a boolean to check if the value has been set.
 func (o *Route) GetSourceOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.Source, true
 }
@@ -104,7 +107,7 @@ func (o *Route) GetDestination() string {
 // and a boolean to check if the value has been set.
 func (o *Route) GetDestinationOk() (*string, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.Destination, true
 }
@@ -115,17 +118,19 @@ func (o *Route) SetDestination(v string) {
 }
 
 func (o Route) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if true {
-		toSerialize["type"] = o.Type
-	}
-	if true {
-		toSerialize["source"] = o.Source
-	}
-	if true {
-		toSerialize["destination"] = o.Destination
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o Route) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	toSerialize["type"] = o.Type
+	toSerialize["source"] = o.Source
+	toSerialize["destination"] = o.Destination
+	return toSerialize, nil
 }
 
 type NullableRoute struct {

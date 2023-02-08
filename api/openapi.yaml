@@ -3516,7 +3516,7 @@ components:
           $ref: '#/components/schemas/job'
         cursor:
           example: !!binary |-
-            VmpGYWExTXlSbkpOVmxaVVYwYzRPUT09
+            Vm1wR1lXRXhUWGxTYmtwT1ZteGFWVll3WXpSUFVUMDk=
           format: byte
           type: string
       type: object

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ServicePATCH type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ServicePATCH{}
+
 // ServicePATCH struct for ServicePATCH
 type ServicePATCH struct {
 	AutoDeploy *string `json:"autoDeploy,omitempty"`
@@ -53,7 +56,7 @@ func (o *ServicePATCH) GetAutoDeploy() string {
 // and a boolean to check if the value has been set.
 func (o *ServicePATCH) GetAutoDeployOk() (*string, bool) {
 	if o == nil || isNil(o.AutoDeploy) {
-    return nil, false
+		return nil, false
 	}
 	return o.AutoDeploy, true
 }
@@ -85,7 +88,7 @@ func (o *ServicePATCH) GetBranch() string {
 // and a boolean to check if the value has been set.
 func (o *ServicePATCH) GetBranchOk() (*string, bool) {
 	if o == nil || isNil(o.Branch) {
-    return nil, false
+		return nil, false
 	}
 	return o.Branch, true
 }
@@ -117,7 +120,7 @@ func (o *ServicePATCH) GetName() string {
 // and a boolean to check if the value has been set.
 func (o *ServicePATCH) GetNameOk() (*string, bool) {
 	if o == nil || isNil(o.Name) {
-    return nil, false
+		return nil, false
 	}
 	return o.Name, true
 }
@@ -149,7 +152,7 @@ func (o *ServicePATCH) GetServiceDetails() ServicePATCHServiceDetails {
 // and a boolean to check if the value has been set.
 func (o *ServicePATCH) GetServiceDetailsOk() (*ServicePATCHServiceDetails, bool) {
 	if o == nil || isNil(o.ServiceDetails) {
-    return nil, false
+		return nil, false
 	}
 	return o.ServiceDetails, true
 }
@@ -169,6 +172,14 @@ func (o *ServicePATCH) SetServiceDetails(v ServicePATCHServiceDetails) {
 }
 
 func (o ServicePATCH) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o ServicePATCH) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !isNil(o.AutoDeploy) {
 		toSerialize["autoDeploy"] = o.AutoDeploy
@@ -182,7 +193,7 @@ func (o ServicePATCH) MarshalJSON() ([]byte, error) {
 	if !isNil(o.ServiceDetails) {
 		toSerialize["serviceDetails"] = o.ServiceDetails
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullableServicePATCH struct {

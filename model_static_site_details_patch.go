@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the StaticSiteDetailsPATCH type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &StaticSiteDetailsPATCH{}
+
 // StaticSiteDetailsPATCH struct for StaticSiteDetailsPATCH
 type StaticSiteDetailsPATCH struct {
 	BuildCommand *string `json:"buildCommand,omitempty"`
@@ -52,7 +55,7 @@ func (o *StaticSiteDetailsPATCH) GetBuildCommand() string {
 // and a boolean to check if the value has been set.
 func (o *StaticSiteDetailsPATCH) GetBuildCommandOk() (*string, bool) {
 	if o == nil || isNil(o.BuildCommand) {
-    return nil, false
+		return nil, false
 	}
 	return o.BuildCommand, true
 }
@@ -84,7 +87,7 @@ func (o *StaticSiteDetailsPATCH) GetPublishPath() string {
 // and a boolean to check if the value has been set.
 func (o *StaticSiteDetailsPATCH) GetPublishPathOk() (*string, bool) {
 	if o == nil || isNil(o.PublishPath) {
-    return nil, false
+		return nil, false
 	}
 	return o.PublishPath, true
 }
@@ -116,7 +119,7 @@ func (o *StaticSiteDetailsPATCH) GetPullRequestPreviewsEnabled() string {
 // and a boolean to check if the value has been set.
 func (o *StaticSiteDetailsPATCH) GetPullRequestPreviewsEnabledOk() (*string, bool) {
 	if o == nil || isNil(o.PullRequestPreviewsEnabled) {
-    return nil, false
+		return nil, false
 	}
 	return o.PullRequestPreviewsEnabled, true
 }
@@ -136,6 +139,14 @@ func (o *StaticSiteDetailsPATCH) SetPullRequestPreviewsEnabled(v string) {
 }
 
 func (o StaticSiteDetailsPATCH) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o StaticSiteDetailsPATCH) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !isNil(o.BuildCommand) {
 		toSerialize["buildCommand"] = o.BuildCommand
@@ -146,7 +157,7 @@ func (o StaticSiteDetailsPATCH) MarshalJSON() ([]byte, error) {
 	if !isNil(o.PullRequestPreviewsEnabled) {
 		toSerialize["pullRequestPreviewsEnabled"] = o.PullRequestPreviewsEnabled
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullableStaticSiteDetailsPATCH struct {

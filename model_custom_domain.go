@@ -16,6 +16,9 @@ import (
 	"time"
 )
 
+// checks if the CustomDomain type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &CustomDomain{}
+
 // CustomDomain struct for CustomDomain
 type CustomDomain struct {
 	Id *string `json:"id,omitempty"`
@@ -58,7 +61,7 @@ func (o *CustomDomain) GetId() string {
 // and a boolean to check if the value has been set.
 func (o *CustomDomain) GetIdOk() (*string, bool) {
 	if o == nil || isNil(o.Id) {
-    return nil, false
+		return nil, false
 	}
 	return o.Id, true
 }
@@ -90,7 +93,7 @@ func (o *CustomDomain) GetName() string {
 // and a boolean to check if the value has been set.
 func (o *CustomDomain) GetNameOk() (*string, bool) {
 	if o == nil || isNil(o.Name) {
-    return nil, false
+		return nil, false
 	}
 	return o.Name, true
 }
@@ -122,7 +125,7 @@ func (o *CustomDomain) GetDomainType() string {
 // and a boolean to check if the value has been set.
 func (o *CustomDomain) GetDomainTypeOk() (*string, bool) {
 	if o == nil || isNil(o.DomainType) {
-    return nil, false
+		return nil, false
 	}
 	return o.DomainType, true
 }
@@ -154,7 +157,7 @@ func (o *CustomDomain) GetPublicSuffix() string {
 // and a boolean to check if the value has been set.
 func (o *CustomDomain) GetPublicSuffixOk() (*string, bool) {
 	if o == nil || isNil(o.PublicSuffix) {
-    return nil, false
+		return nil, false
 	}
 	return o.PublicSuffix, true
 }
@@ -186,7 +189,7 @@ func (o *CustomDomain) GetRedirectForName() string {
 // and a boolean to check if the value has been set.
 func (o *CustomDomain) GetRedirectForNameOk() (*string, bool) {
 	if o == nil || isNil(o.RedirectForName) {
-    return nil, false
+		return nil, false
 	}
 	return o.RedirectForName, true
 }
@@ -218,7 +221,7 @@ func (o *CustomDomain) GetVerificationStatus() string {
 // and a boolean to check if the value has been set.
 func (o *CustomDomain) GetVerificationStatusOk() (*string, bool) {
 	if o == nil || isNil(o.VerificationStatus) {
-    return nil, false
+		return nil, false
 	}
 	return o.VerificationStatus, true
 }
@@ -250,7 +253,7 @@ func (o *CustomDomain) GetCreatedAt() time.Time {
 // and a boolean to check if the value has been set.
 func (o *CustomDomain) GetCreatedAtOk() (*time.Time, bool) {
 	if o == nil || isNil(o.CreatedAt) {
-    return nil, false
+		return nil, false
 	}
 	return o.CreatedAt, true
 }
@@ -282,7 +285,7 @@ func (o *CustomDomain) GetServer() StaticSiteDetailsParentServer {
 // and a boolean to check if the value has been set.
 func (o *CustomDomain) GetServerOk() (*StaticSiteDetailsParentServer, bool) {
 	if o == nil || isNil(o.Server) {
-    return nil, false
+		return nil, false
 	}
 	return o.Server, true
 }
@@ -302,6 +305,14 @@ func (o *CustomDomain) SetServer(v StaticSiteDetailsParentServer) {
 }
 
 func (o CustomDomain) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o CustomDomain) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !isNil(o.Id) {
 		toSerialize["id"] = o.Id
@@ -327,7 +338,7 @@ func (o CustomDomain) MarshalJSON() ([]byte, error) {
 	if !isNil(o.Server) {
 		toSerialize["server"] = o.Server
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullableCustomDomain struct {

@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the GetCustomDomains200ResponseInner type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &GetCustomDomains200ResponseInner{}
+
 // GetCustomDomains200ResponseInner struct for GetCustomDomains200ResponseInner
 type GetCustomDomains200ResponseInner struct {
 	CustomDomain *CustomDomain `json:"customDomain,omitempty"`
@@ -51,7 +54,7 @@ func (o *GetCustomDomains200ResponseInner) GetCustomDomain() CustomDomain {
 // and a boolean to check if the value has been set.
 func (o *GetCustomDomains200ResponseInner) GetCustomDomainOk() (*CustomDomain, bool) {
 	if o == nil || isNil(o.CustomDomain) {
-    return nil, false
+		return nil, false
 	}
 	return o.CustomDomain, true
 }
@@ -83,7 +86,7 @@ func (o *GetCustomDomains200ResponseInner) GetCursor() string {
 // and a boolean to check if the value has been set.
 func (o *GetCustomDomains200ResponseInner) GetCursorOk() (*string, bool) {
 	if o == nil || isNil(o.Cursor) {
-    return nil, false
+		return nil, false
 	}
 	return o.Cursor, true
 }
@@ -103,6 +106,14 @@ func (o *GetCustomDomains200ResponseInner) SetCursor(v string) {
 }
 
 func (o GetCustomDomains200ResponseInner) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o GetCustomDomains200ResponseInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !isNil(o.CustomDomain) {
 		toSerialize["customDomain"] = o.CustomDomain
@@ -110,7 +121,7 @@ func (o GetCustomDomains200ResponseInner) MarshalJSON() ([]byte, error) {
 	if !isNil(o.Cursor) {
 		toSerialize["cursor"] = o.Cursor
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullableGetCustomDomains200ResponseInner struct {

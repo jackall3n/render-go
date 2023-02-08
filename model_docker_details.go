@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the DockerDetails type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DockerDetails{}
+
 // DockerDetails struct for DockerDetails
 type DockerDetails struct {
 	DockerCommand *string `json:"dockerCommand,omitempty"`
@@ -52,7 +55,7 @@ func (o *DockerDetails) GetDockerCommand() string {
 // and a boolean to check if the value has been set.
 func (o *DockerDetails) GetDockerCommandOk() (*string, bool) {
 	if o == nil || isNil(o.DockerCommand) {
-    return nil, false
+		return nil, false
 	}
 	return o.DockerCommand, true
 }
@@ -84,7 +87,7 @@ func (o *DockerDetails) GetDockerContext() string {
 // and a boolean to check if the value has been set.
 func (o *DockerDetails) GetDockerContextOk() (*string, bool) {
 	if o == nil || isNil(o.DockerContext) {
-    return nil, false
+		return nil, false
 	}
 	return o.DockerContext, true
 }
@@ -116,7 +119,7 @@ func (o *DockerDetails) GetDockerfilePath() string {
 // and a boolean to check if the value has been set.
 func (o *DockerDetails) GetDockerfilePathOk() (*string, bool) {
 	if o == nil || isNil(o.DockerfilePath) {
-    return nil, false
+		return nil, false
 	}
 	return o.DockerfilePath, true
 }
@@ -136,6 +139,14 @@ func (o *DockerDetails) SetDockerfilePath(v string) {
 }
 
 func (o DockerDetails) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o DockerDetails) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !isNil(o.DockerCommand) {
 		toSerialize["dockerCommand"] = o.DockerCommand
@@ -146,7 +157,7 @@ func (o DockerDetails) MarshalJSON() ([]byte, error) {
 	if !isNil(o.DockerfilePath) {
 		toSerialize["dockerfilePath"] = o.DockerfilePath
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullableDockerDetails struct {

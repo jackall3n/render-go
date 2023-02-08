@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the PrivateServiceDetailsPOST type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &PrivateServiceDetailsPOST{}
+
 // PrivateServiceDetailsPOST struct for PrivateServiceDetailsPOST
 type PrivateServiceDetailsPOST struct {
 	Disk *WebServiceDetailsPOSTDisk `json:"disk,omitempty"`
@@ -72,7 +75,7 @@ func (o *PrivateServiceDetailsPOST) GetDisk() WebServiceDetailsPOSTDisk {
 // and a boolean to check if the value has been set.
 func (o *PrivateServiceDetailsPOST) GetDiskOk() (*WebServiceDetailsPOSTDisk, bool) {
 	if o == nil || isNil(o.Disk) {
-    return nil, false
+		return nil, false
 	}
 	return o.Disk, true
 }
@@ -105,7 +108,7 @@ func (o *PrivateServiceDetailsPOST) GetEnv() ServiceEnv {
 // and a boolean to check if the value has been set.
 func (o *PrivateServiceDetailsPOST) GetEnvOk() (*ServiceEnv, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.Env, true
 }
@@ -128,7 +131,7 @@ func (o *PrivateServiceDetailsPOST) GetEnvSpecificDetails() WebServiceDetailsPOS
 // and a boolean to check if the value has been set.
 func (o *PrivateServiceDetailsPOST) GetEnvSpecificDetailsOk() (*WebServiceDetailsPOSTEnvSpecificDetails, bool) {
 	if o == nil || isNil(o.EnvSpecificDetails) {
-    return nil, false
+		return nil, false
 	}
 	return o.EnvSpecificDetails, true
 }
@@ -160,7 +163,7 @@ func (o *PrivateServiceDetailsPOST) GetNumInstances() int32 {
 // and a boolean to check if the value has been set.
 func (o *PrivateServiceDetailsPOST) GetNumInstancesOk() (*int32, bool) {
 	if o == nil || isNil(o.NumInstances) {
-    return nil, false
+		return nil, false
 	}
 	return o.NumInstances, true
 }
@@ -192,7 +195,7 @@ func (o *PrivateServiceDetailsPOST) GetPlan() string {
 // and a boolean to check if the value has been set.
 func (o *PrivateServiceDetailsPOST) GetPlanOk() (*string, bool) {
 	if o == nil || isNil(o.Plan) {
-    return nil, false
+		return nil, false
 	}
 	return o.Plan, true
 }
@@ -224,7 +227,7 @@ func (o *PrivateServiceDetailsPOST) GetPullRequestPreviewsEnabled() string {
 // and a boolean to check if the value has been set.
 func (o *PrivateServiceDetailsPOST) GetPullRequestPreviewsEnabledOk() (*string, bool) {
 	if o == nil || isNil(o.PullRequestPreviewsEnabled) {
-    return nil, false
+		return nil, false
 	}
 	return o.PullRequestPreviewsEnabled, true
 }
@@ -256,7 +259,7 @@ func (o *PrivateServiceDetailsPOST) GetRegion() Region {
 // and a boolean to check if the value has been set.
 func (o *PrivateServiceDetailsPOST) GetRegionOk() (*Region, bool) {
 	if o == nil || isNil(o.Region) {
-    return nil, false
+		return nil, false
 	}
 	return o.Region, true
 }
@@ -276,13 +279,19 @@ func (o *PrivateServiceDetailsPOST) SetRegion(v Region) {
 }
 
 func (o PrivateServiceDetailsPOST) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o PrivateServiceDetailsPOST) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !isNil(o.Disk) {
 		toSerialize["disk"] = o.Disk
 	}
-	if true {
-		toSerialize["env"] = o.Env
-	}
+	toSerialize["env"] = o.Env
 	if !isNil(o.EnvSpecificDetails) {
 		toSerialize["envSpecificDetails"] = o.EnvSpecificDetails
 	}
@@ -298,7 +307,7 @@ func (o PrivateServiceDetailsPOST) MarshalJSON() ([]byte, error) {
 	if !isNil(o.Region) {
 		toSerialize["region"] = o.Region
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullablePrivateServiceDetailsPOST struct {

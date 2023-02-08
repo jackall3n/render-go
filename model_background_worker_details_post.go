@@ -15,6 +15,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the BackgroundWorkerDetailsPOST type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &BackgroundWorkerDetailsPOST{}
+
 // BackgroundWorkerDetailsPOST struct for BackgroundWorkerDetailsPOST
 type BackgroundWorkerDetailsPOST struct {
 	Disk *WebServiceDetailsPOSTDisk `json:"disk,omitempty"`
@@ -72,7 +75,7 @@ func (o *BackgroundWorkerDetailsPOST) GetDisk() WebServiceDetailsPOSTDisk {
 // and a boolean to check if the value has been set.
 func (o *BackgroundWorkerDetailsPOST) GetDiskOk() (*WebServiceDetailsPOSTDisk, bool) {
 	if o == nil || isNil(o.Disk) {
-    return nil, false
+		return nil, false
 	}
 	return o.Disk, true
 }
@@ -105,7 +108,7 @@ func (o *BackgroundWorkerDetailsPOST) GetEnv() ServiceEnv {
 // and a boolean to check if the value has been set.
 func (o *BackgroundWorkerDetailsPOST) GetEnvOk() (*ServiceEnv, bool) {
 	if o == nil {
-    return nil, false
+		return nil, false
 	}
 	return &o.Env, true
 }
@@ -128,7 +131,7 @@ func (o *BackgroundWorkerDetailsPOST) GetEnvSpecificDetails() WebServiceDetailsP
 // and a boolean to check if the value has been set.
 func (o *BackgroundWorkerDetailsPOST) GetEnvSpecificDetailsOk() (*WebServiceDetailsPOSTEnvSpecificDetails, bool) {
 	if o == nil || isNil(o.EnvSpecificDetails) {
-    return nil, false
+		return nil, false
 	}
 	return o.EnvSpecificDetails, true
 }
@@ -160,7 +163,7 @@ func (o *BackgroundWorkerDetailsPOST) GetNumInstances() int32 {
 // and a boolean to check if the value has been set.
 func (o *BackgroundWorkerDetailsPOST) GetNumInstancesOk() (*int32, bool) {
 	if o == nil || isNil(o.NumInstances) {
-    return nil, false
+		return nil, false
 	}
 	return o.NumInstances, true
 }
@@ -192,7 +195,7 @@ func (o *BackgroundWorkerDetailsPOST) GetPlan() string {
 // and a boolean to check if the value has been set.
 func (o *BackgroundWorkerDetailsPOST) GetPlanOk() (*string, bool) {
 	if o == nil || isNil(o.Plan) {
-    return nil, false
+		return nil, false
 	}
 	return o.Plan, true
 }
@@ -224,7 +227,7 @@ func (o *BackgroundWorkerDetailsPOST) GetPullRequestPreviewsEnabled() string {
 // and a boolean to check if the value has been set.
 func (o *BackgroundWorkerDetailsPOST) GetPullRequestPreviewsEnabledOk() (*string, bool) {
 	if o == nil || isNil(o.PullRequestPreviewsEnabled) {
-    return nil, false
+		return nil, false
 	}
 	return o.PullRequestPreviewsEnabled, true
 }
@@ -256,7 +259,7 @@ func (o *BackgroundWorkerDetailsPOST) GetRegion() Region {
 // and a boolean to check if the value has been set.
 func (o *BackgroundWorkerDetailsPOST) GetRegionOk() (*Region, bool) {
 	if o == nil || isNil(o.Region) {
-    return nil, false
+		return nil, false
 	}
 	return o.Region, true
 }
@@ -276,13 +279,19 @@ func (o *BackgroundWorkerDetailsPOST) SetRegion(v Region) {
 }
 
 func (o BackgroundWorkerDetailsPOST) MarshalJSON() ([]byte, error) {
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o BackgroundWorkerDetailsPOST) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !isNil(o.Disk) {
 		toSerialize["disk"] = o.Disk
 	}
-	if true {
-		toSerialize["env"] = o.Env
-	}
+	toSerialize["env"] = o.Env
 	if !isNil(o.EnvSpecificDetails) {
 		toSerialize["envSpecificDetails"] = o.EnvSpecificDetails
 	}
@@ -298,7 +307,7 @@ func (o BackgroundWorkerDetailsPOST) MarshalJSON() ([]byte, error) {
 	if !isNil(o.Region) {
 		toSerialize["region"] = o.Region
 	}
-	return json.Marshal(toSerialize)
+	return toSerialize, nil
 }
 
 type NullableBackgroundWorkerDetailsPOST struct {
