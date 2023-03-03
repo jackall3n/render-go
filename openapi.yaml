@@ -520,11 +520,7 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                oneOf:
-                  - $ref: '#/components/schemas/envVarKeyValue'
-                  - $ref: '#/components/schemas/envVarKeyGenerateValue'
+              $ref: '#/components/schemas/envVarsPATCH'
       responses:
         '200':
           description: OK
@@ -1829,6 +1825,12 @@ components:
           enum: [starter, starter_plus, standard, standard_plus, pro, pro_plus]
         schedule:
           type: string
+    envVarsPATCH:
+      type: array
+      items:
+        oneOf:
+          - $ref: '#/components/schemas/envVarKeyValue'
+          - $ref: '#/components/schemas/envVarKeyGenerateValue'
     envVarKeyValue:
       type: object
       required:
