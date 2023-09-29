@@ -1294,6 +1294,14 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/suspenderType'
+        imagePath:
+          type: string
+          description: |
+            Path to the image used for this server (e.g docker.io/library/nginx:latest).
+        registryCredentialId:
+          type: string
+          description: |
+            Optional reference to the registry credential passed to the image repository to retrieve this image.
         type:
           $ref: '#/components/schemas/serviceType'
         updatedAt:
@@ -1475,7 +1483,6 @@ components:
         - type
         - name
         - ownerId
-        - repo
       properties:
         type:
           $ref: '#/components/schemas/serviceType'
@@ -1493,23 +1500,7 @@ components:
           default: yes
           description: 'Defaults to "yes"'
         image:
-          type: object
-          required:
-              - ownerId
-              - imagePath
-          properties:
-            ownerId:
-              type: string
-              description: |
-                The ID of the owner for this image. This should match the owner of the service as well as the owner of any specified registry credential.
-            imagePath:
-              type: string
-              description: |
-                Path to the image used for this server (e.g docker.io/library/nginx:latest).
-            registryCredentialId:
-              type: string
-              description: |
-                Optional reference to the registry credential passed to the image repository to retrieve this image.
+          $ref: '#/components/schemas/imagePOST'
         branch:
           type: string
           description: 'If left empty, this will fall back to the default branch of the repository'
@@ -1538,6 +1529,24 @@ components:
             - $ref: '#/components/schemas/privateServiceDetailsPOST'
             - $ref: '#/components/schemas/backgroundWorkerDetailsPOST'
             - $ref: '#/components/schemas/cronJobDetailsPOST'
+    imagePOST:
+      type: object
+      required:
+        - ownerId
+        - imagePath
+      properties:
+        ownerId:
+          type: string
+          description: |
+            The ID of the owner for this image. This should match the owner of the service as well as the owner of any specified registry credential.
+        imagePath:
+          type: string
+          description: |
+            Path to the image used for this server (e.g docker.io/library/nginx:latest).
+        registryCredentialId:
+          type: string
+          description: |
+            Optional reference to the registry credential passed to the image repository to retrieve this image.
     dockerDetailsPOST:
       type: object
       properties:
